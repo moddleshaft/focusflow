@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FocusFlow</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a5acd, #ff69b4);
+        }
+
+        .app {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            color: #6a5acd;
+            font-size: 36px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        /* GOAL */
+
+        .goal-box {
+            background: #f5f3ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .goal-box h2 {
+            margin-top: 0;
+            color: #6a5acd;
+        }
+
+        .goal-description {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        #goalInput {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        #goalInput:focus {
+            border-color: #6a5acd;
+        }
+
+        .goal-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #goalCategory {
+            flex: 1;
+            padding: 13px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            font-size: 16px;
+        }
+
+        .goal-button {
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            background: #6a5acd;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .goal-button:hover {
+            opacity: 0.85;
+        }
+
+        .current-goal {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .goal-text {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .change-goal-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 11px;
+            border: 2px solid #6a5acd;
+            border-radius: 10px;
+            background: white;
+            color: #6a5acd;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .change-goal-button:hover {
+            background: #6a5acd;
+            color: white;
+        }
+
+        /* TODAY'S FOCUS */
+
+        .focus-box {
+            background: #fff7fb;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #ffb6d9;
+        }
+
+        .focus-box h2 {
+            margin-top: 0;
+            color: #6a5acd;
+        }
+
+        #focusSummary {
+            margin-bottom: 0;
+            color: #555;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        /* ACTION INPUT */
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        #taskInput {
+            flex: 1;
+            min-width: 180px;
+            padding: 13px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #taskInput:focus {
+            border-color: #6a5acd;
+        }
+
+        #prioritySelect,
+        #categorySelect {
+            padding: 13px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .add-button {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            background: #6a5acd;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .add-button:hover {
+            opacity: 0.85;
+        }
+
+        /* SUGGEST BUTTON */
+
+        .ai-button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            margin-bottom: 20px;
+            background: #ff69b4;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .ai-button:hover {
+            opacity: 0.85;
+        }
+
+        /* SUGGESTIONS */
+
+        .suggestions-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff7fb;
+            border: 2px solid #ffb6d9;
+            border-radius: 15px;
+        }
+
+        .suggestions-box h2 {
+            margin-top: 0;
+            color: #6a5acd;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .suggestion-item input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .suggestion-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .add-selected-button {
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            background: #6a5acd;
+            color: white;
+            cursor: pointer;
+        }
+
+        .cancel-button {
+            flex: 1;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 12px;
+            background: white;
+            color: #ff69b4;
+            cursor: pointer;
+        }
+
+        /* ACTION LIST */
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        #taskList li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px;
+            margin-bottom: 10px;
+            background: #f5f3ff;
+            border-radius: 10px;
+        }
+
+        .priority-dot,
+        .category-icon {
+            font-size: 20px;
+        }
+
+        .task-text {
+            flex: 1;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .delete-button {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 10px;
+            background: #ff69b4;
+            color: white;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            opacity: 0.85;
+        }
+
+        #taskCounter {
+            text-align: center;
+            font-weight: bold;
+            color: #6a5acd;
+            line-height: 1.5;
+        }
+
+        .clear-button {
+            display: block;
+            margin: 15px auto 0;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 10px 15px;
+            background: white;
+            color: #ff69b4;
+            cursor: pointer;
+        }
+
+        .clear-button:hover {
+            background: #ff69b4;
+            color: white;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .app {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .goal-controls,
+            .input-area {
+                flex-direction: column;
+            }
+
+            #goalCategory,
+            .goal-button,
+            #taskInput,
+            #prioritySelect,
+            #categorySelect,
+            .add-button {
+                width: 100%;
+            }
+
+            #taskList li {
+                flex-wrap: wrap;
+            }
+
+            .suggestion-buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <h1>🎯 FocusFlow</h1>
+
+    <p class="subtitle">
+        Turn your goals into small actions and stay focused.
+    </p>
+
+
+    <!-- GOAL SECTION -->
+
+    <div class="goal-box">
+
+        <h2>
+            🎯 What's something you want to accomplish?
+        </h2>
+
+        <p class="goal-description">
+            Tell FocusFlow what you want to achieve,
+            and we'll help turn it into smaller actions.
+        </p>
+
+        <input
+            id="goalInput"
+            type="text"
+            placeholder="Example: Learn JavaScript"
+        >
+
+
+        <div class="goal-controls">
+
+            <select id="goalCategory">
+
+                <option value="work">
+                    💼 Work & Business
+                </option>
+
+                <option value="learning">
+                    📚 Learning
+                </option>
+
+                <option value="life">
+                    🌱 Everyday Life
+                </option>
+
+            </select>
+
+
+            <button
+                class="goal-button"
+                onclick="setGoal()"
+            >
+                🚀 Start My Goal
+            </button>
+
+        </div>
+
+
+        <div
+            id="currentGoal"
+            class="current-goal"
+        >
+
+            <div
+                id="goalText"
+                class="goal-text"
+            ></div>
+
+
+            <button
+                class="change-goal-button"
+                onclick="changeGoal()"
+            >
+                🔄 Change Goal
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- TODAY'S FOCUS -->
+
+    <div class="focus-box">
+
+        <h2>
+            🎯 Today's Focus
+        </h2>
+
+        <p id="focusSummary">
+            Set a goal and start taking action!
+        </p>
+
+    </div>
+
+
+    <!-- ACTION INPUT -->
+
+    <div class="input-area">
+
+        <input
+            id="taskInput"
+            type="text"
+            placeholder="What's your next action?"
+        >
+
+
+        <select id="categorySelect">
+
+            <option value="work">
+                💼 Work & Business
+            </option>
+
+            <option value="learning">
+                📚 Learning
+            </option>
+
+            <option value="life">
+                🌱 Everyday Life
+            </option>
+
+        </select>
+
+
+        <select id="prioritySelect">
+
+            <option value="high">
+                🔴 High
+            </option>
+
+            <option value="medium" selected>
+                🟡 Medium
+            </option>
+
+            <option value="low">
+                🟢 Low
+            </option>
+
+        </select>
+
+
+        <button
+            class="add-button"
+            onclick="addTask()"
+        >
+            ➕ Add Action
+        </button>
+
+    </div>
+
+
+    <!-- SUGGEST -->
+
+    <button
+        class="ai-button"
+        onclick="breakGoal()"
+    >
+        ✨ Suggest Steps
+    </button>
+
+
+    <!-- SUGGESTIONS -->
+
+    <div
+        id="suggestionsBox"
+        class="suggestions-box"
+    >
+
+        <h2>
+            ✨ Suggested Steps
+        </h2>
+
+        <p>
+            Choose the steps you want to add to FocusFlow:
+        </p>
+
+        <div id="suggestionsList"></div>
+
+
+        <div class="suggestion-buttons">
+
+            <button
+                class="add-selected-button"
+                onclick="addSelectedSteps()"
+            >
+                Add Selected Actions
+            </button>
+
+            <button
+                class="cancel-button"
+                onclick="closeSuggestions()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTION LIST -->
+
+    <ul id="taskList"></ul>
+
+
+    <p id="taskCounter">
+        📝 No actions yet.
+        Add your first action above!
+    </p>
+
+
+    <button
+        class="clear-button"
+        onclick="clearCompleted()"
+    >
+        Clear Completed
+    </button>
+
+</div>
+
+
+<script>
+
+    /*
+        LOAD SAVED DATA
+    */
+
+    let tasks =
+        JSON.parse(
+            localStorage.getItem("tasks")
+        ) || [];
+
+
+    let currentGoal =
+        localStorage.getItem("focusGoal") || "";
+
+
+    let currentGoalCategory =
+        localStorage.getItem(
+            "focusGoalCategory"
+        ) || "work";
+
+
+    let suggestedSteps = [];
+
+
+    /*
+        SAVE TASKS
+    */
+
+    function saveTasks() {
+
+        localStorage.setItem(
+            "tasks",
+            JSON.stringify(tasks)
+        );
+
+    }
+
+
+    /*
+        SET GOAL
+    */
+
+    function setGoal() {
+
+        let goalInput =
+            document.getElementById(
+                "goalInput"
+            );
+
+
+        let goal =
+            goalInput.value.trim();
+
+
+        let category =
+            document.getElementById(
+                "goalCategory"
+            ).value;
+
+
+        if (goal === "") {
+
+            alert(
+                "Please enter a goal first."
+            );
+
+            goalInput.focus();
+
+            return;
+
+        }
+
+
+        currentGoal = goal;
+
+        currentGoalCategory = category;
+
+
+        localStorage.setItem(
+            "focusGoal",
+            currentGoal
+        );
+
+
+        localStorage.setItem(
+            "focusGoalCategory",
+            currentGoalCategory
+        );
+
+
+        showCurrentGoal();
+
+        updateFocus();
+
+
+        goalInput.value = "";
+
+    }
+
+
+    /*
+        SHOW CURRENT GOAL
+    */
+
+    function showCurrentGoal() {
+
+        let goalBox =
+            document.getElementById(
+                "currentGoal"
+            );
+
+
+        let goalText =
+            document.getElementById(
+                "goalText"
+            );
+
+
+        if (currentGoal === "") {
+
+            goalBox.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        let icon = "💼";
+
+
+        if (
+            currentGoalCategory ===
+            "learning"
+        ) {
+
+            icon = "📚";
+
+        }
+
+
+        if (
+            currentGoalCategory ===
+            "life"
+        ) {
+
+            icon = "🌱";
+
+        }
+
+
+        goalText.innerHTML =
+            "<strong>Current Goal:</strong><br>" +
+            icon +
+            " " +
+            currentGoal;
+
+
+        goalBox.style.display =
+            "block";
+
+    }
+
+
+    /*
+        CHANGE GOAL
+    */
+
+    function changeGoal() {
+
+        let goalInput =
+            document.getElementById(
+                "goalInput"
+            );
+
+
+        let goalCategory =
+            document.getElementById(
+                "goalCategory"
+            );
+
+
+        goalInput.value =
+            currentGoal;
+
+
+        goalCategory.value =
+            currentGoalCategory;
+
+
+        goalInput.focus();
+
+
+        goalInput.select();
+
+
+        goalInput.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    /*
+        UPDATE TODAY'S FOCUS
+    */
+
+    function updateFocus() {
+
+        let remainingTasks =
+            tasks.filter(
+                function(task) {
+
+                    return !task.completed;
+
+                }
+            ).length;
+
+
+        let focusSummary =
+            document.getElementById(
+                "focusSummary"
+            );
+
+
+        if (currentGoal !== "") {
+
+            if (remainingTasks === 0) {
+
+                focusSummary.textContent =
+                    "🎯 Goal: " +
+                    currentGoal +
+                    " — You're all caught up!";
+
+            } else {
+
+                focusSummary.textContent =
+                    "🎯 Goal: " +
+                    currentGoal +
+                    " — " +
+                    remainingTasks +
+                    " actions remaining.";
+
+            }
+
+        } else {
+
+            if (remainingTasks === 0) {
+
+                focusSummary.textContent =
+                    "Set a goal and start taking action!";
+
+            } else {
+
+                focusSummary.textContent =
+                    "You have " +
+                    remainingTasks +
+                    " actions to complete.";
+
+            }
+
+        }
+
+    }
+
+
+    /*
+        DISPLAY TASKS
+    */
+
+    function displayTasks() {
+
+        let taskList =
+            document.getElementById(
+                "taskList"
+            );
+
+
+        taskList.innerHTML = "";
+
+
+        let remainingTasks =
+            tasks.filter(
+                function(task) {
+
+                    return !task.completed;
+
+                }
+            ).length;
+
+
+        let taskCounter =
+            document.getElementById(
+                "taskCounter"
+            );
+
+
+        if (remainingTasks === 0) {
+
+            if (tasks.length === 0) {
+
+                taskCounter.textContent =
+                    "📝 No actions yet. Add your first action above!";
+
+            } else {
+
+                taskCounter.textContent =
+                    "🎉 All actions completed!";
+
+            }
+
+        } else {
+
+            taskCounter.textContent =
+                remainingTasks +
+                " actions remaining";
+
+        }
+
+
+        tasks.forEach(
+            function(task, index) {
+
+                let listItem =
+                    document.createElement(
+                        "li"
+                    );
+
+
+                let categoryIcon =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                if (
+                    task.category ===
+                    "work"
+                ) {
+
+                    categoryIcon.textContent =
+                        "💼";
+
+                } else if (
+                    task.category ===
+                    "learning"
+                ) {
+
+                    categoryIcon.textContent =
+                        "📚";
+
+                } else {
+
+                    categoryIcon.textContent =
+                        "🌱";
+
+                }
+
+
+                categoryIcon.className =
+                    "category-icon";
+
+
+                let priorityDot =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                if (
+                    task.priority ===
+                    "high"
+                ) {
+
+                    priorityDot.textContent =
+                        "🔴";
+
+                } else if (
+                    task.priority ===
+                    "medium"
+                ) {
+
+                    priorityDot.textContent =
+                        "🟡";
+
+                } else {
+
+                    priorityDot.textContent =
+                        "🟢";
+
+                }
+
+
+                priorityDot.className =
+                    "priority-dot";
+
+
+                let taskText =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                taskText.textContent =
+                    task.text;
+
+
+                taskText.className =
+                    "task-text";
+
+
+                if (task.completed) {
+
+                    taskText.classList.add(
+                        "completed"
+                    );
+
+                }
+
+
+                taskText.onclick =
+                    function() {
+
+                        tasks[index].completed =
+                            !tasks[index].completed;
+
+
+                        saveTasks();
+
+                        displayTasks();
+
+                        updateFocus();
+
+                    };
+
+
+                let deleteButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                deleteButton.textContent =
+                    "Delete";
+
+
+                deleteButton.className =
+                    "delete-button";
+
+
+                deleteButton.onclick =
+                    function() {
+
+                        tasks.splice(
+                            index,
+                            1
+                        );
+
+
+                        saveTasks();
+
+                        displayTasks();
+
+                        updateFocus();
+
+                    };
+
+
+                listItem.appendChild(
+                    categoryIcon
+                );
+
+
+                listItem.appendChild(
+                    priorityDot
+                );
+
+
+                listItem.appendChild(
+                    taskText
+                );
+
+
+                listItem.appendChild(
+                    deleteButton
+                );
+
+
+                taskList.appendChild(
+                    listItem
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+        ADD ACTION
+    */
+
+    function addTask() {
+
+        let taskInput =
+            document.getElementById(
+                "taskInput"
+            );
+
+
+        let task =
+            taskInput.value.trim();
+
+
+        let priority =
+            document.getElementById(
+                "prioritySelect"
+            ).value;
+
+
+        let category =
+            document.getElementById(
+                "categorySelect"
+            ).value;
+
+
+        if (task === "") {
+
+            taskInput.focus();
+
+            return;
+
+        }
+
+
+        tasks.push({
+
+            text: task,
+
+            completed: false,
+
+            priority: priority,
+
+            category: category
+
+        });
+
+
+        saveTasks();
+
+
+        taskInput.value = "";
+
+
+        document.getElementById(
+            "prioritySelect"
+        ).value =
+            "medium";
+
+
+        document.getElementById(
+            "categorySelect"
+        ).value =
+            "work";
+
+
+        displayTasks();
+
+        updateFocus();
+
+
+        taskInput.focus();
+
+    }
+
+
+    /*
+        CLEAR COMPLETED
+    */
+
+    function clearCompleted() {
+
+        tasks =
+            tasks.filter(
+                function(task) {
+
+                    return !task.completed;
+
+                }
+            );
+
+
+        saveTasks();
+
+        displayTasks();
+
+        updateFocus();
+
+    }
+
+
+    /*
+        SUGGEST STEPS
+    */
+
+    function breakGoal() {
+
+        if (currentGoal === "") {
+
+            alert(
+                "Please set a goal first."
+            );
+
+            document.getElementById(
+                "goalInput"
+            ).focus();
+
+            return;
+
+        }
+
+
+        let goal =
+            currentGoal.toLowerCase();
+
+
+        suggestedSteps = [];
+
+
+        /*
+            LEARNING
+        */
+
+        if (
+            goal.includes("learn") ||
+            goal.includes("study") ||
+            goal.includes("coding") ||
+            goal.includes("programming") ||
+            currentGoalCategory ===
+            "learning"
+        ) {
+
+            suggestedSteps = [
+
+                "Choose what you want to learn",
+
+                "Find beginner learning resources",
+
+                "Study the basic concepts",
+
+                "Practice what you learned",
+
+                "Build a small project"
+
+            ];
+
+        }
+
+
+        /*
+            BUSINESS
+        */
+
+        else if (
+            goal.includes("business") ||
+            goal.includes("money") ||
+            goal.includes("client") ||
+            goal.includes("freelance") ||
+            goal.includes("startup") ||
+            currentGoalCategory ===
+            "work"
+        ) {
+
+            suggestedSteps = [
+
+                "Define the specific goal",
+
+                "Identify your target customer",
+
+                "Research the market",
+
+                "Create a simple offer",
+
+                "Find your first potential customer"
+
+            ];
+
+        }
+
+
+        /*
+            LIFE
+        */
+
+        else {
+
+            suggestedSteps = [
+
+                "Define exactly what needs to be done",
+
+                "Break the goal into smaller actions",
+
+                "Choose the easiest first step",
+
+                "Complete the main task",
+
+                "Review your progress"
+
+            ];
+
+        }
+
+
+        showSuggestions();
+
+    }
+
+
+    /*
+        SHOW SUGGESTIONS
+    */
+
+    function showSuggestions() {
+
+        let suggestionsList =
+            document.getElementById(
+                "suggestionsList"
+            );
+
+
+        suggestionsList.innerHTML = "";
+
+
+        suggestedSteps.forEach(
+            function(step, index) {
+
+                let item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "suggestion-item";
+
+
+                let checkbox =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                checkbox.type =
+                    "checkbox";
+
+
+                checkbox.checked =
+                    true;
+
+
+                checkbox.id =
+                    "suggestion-" +
+                    index;
+
+
+                let label =
+                    document.createElement(
+                        "label"
+                    );
+
+
+                label.htmlFor =
+                    "suggestion-" +
+                    index;
+
+
+                label.textContent =
+                    step;
+
+
+                item.appendChild(
+                    checkbox
+                );
+
+
+                item.appendChild(
+                    label
+                );
+
+
+                suggestionsList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "suggestionsBox"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "suggestionsBox"
+        ).scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    /*
+        ADD SELECTED SUGGESTIONS
+    */
+
+    function addSelectedSteps() {
+
+        suggestedSteps.forEach(
+            function(step, index) {
+
+                let checkbox =
+                    document.getElementById(
+                        "suggestion-" +
+                        index
+                    );
+
+
+                if (
+                    checkbox &&
+                    checkbox.checked
+                ) {
+
+                    tasks.push({
+
+                        text: step,
+
+                        completed: false,
+
+                        priority: "medium",
+
+                        category:
+                            currentGoalCategory
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        saveTasks();
+
+        displayTasks();
+
+        updateFocus();
+
+        closeSuggestions();
+
+    }
+
+
+    /*
+        CLOSE SUGGESTIONS
+    */
+
+    function closeSuggestions() {
+
+        document.getElementById(
+            "suggestionsBox"
+        ).style.display =
+            "none";
+
+
+        suggestedSteps = [];
+
+    }
+
+
+    /*
+        ENTER KEY SUPPORT
+    */
+
+    document.getElementById(
+        "goalInput"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                setGoal();
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "taskInput"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                addTask();
+
+            }
+
+        }
+    );
+
+
+    /*
+        LOAD SAVED SETTINGS
+    */
+
+    document.getElementById(
+        "goalCategory"
+    ).value =
+        currentGoalCategory;
+
+    if (currentGoal !== "") {
+        showCurrentGoal();
+    }
+
+    displayTasks();
+
+    updateFocus();
+
+</script>
+
+</body>
+</html>
