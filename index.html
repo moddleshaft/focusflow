@@ -3,989 +3,958 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V7</title>
+<title>FocusFlow V8</title>
 
 <style>
 *{box-sizing:border-box}
 
+:root{
+  --primary:#6a5acd;
+  --secondary:#ff69b4;
+  --success:#4caf50;
+  --warning:#d88900;
+  --dark:#202020;
+  --muted:#777;
+  --light:#f7f5ff;
+  --border:#e7e3f8;
+}
+
 body{
-margin:0;
-padding:20px 14px;
-min-height:100vh;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#6a5acd,#ff69b4);
-color:#222;
+  margin:0;
+  padding:18px 12px;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#6a5acd,#ff69b4);
+  color:#222;
 }
 
 button,input,select{font:inherit}
 button{cursor:pointer}
 
 .app{
-width:100%;
-max-width:980px;
-margin:auto;
-background:#fff;
-border-radius:24px;
-padding:28px;
-box-shadow:0 18px 50px rgba(0,0,0,.22);
+  max-width:1050px;
+  margin:auto;
+  background:#fff;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
 }
 
 .header{
-text-align:center;
-margin-bottom:25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
 }
 
 .logo{
-font-size:40px;
-font-weight:800;
-color:#6a5acd;
+  font-size:34px;
+  font-weight:900;
+  color:var(--primary);
 }
 
 .subtitle{
-color:#777;
-line-height:1.5;
-margin:5px 0 0;
+  color:var(--muted);
+  margin:4px 0 0;
 }
 
-/* WELCOME */
-
-.welcome{
-background:linear-gradient(135deg,#f5f3ff,#fff7fb);
-border:2px solid #e6e0ff;
-border-radius:18px;
-padding:24px;
-margin-bottom:20px;
+.header-badge{
+  padding:8px 12px;
+  border-radius:20px;
+  background:#f0edff;
+  color:var(--primary);
+  font-weight:bold;
+  font-size:13px;
 }
 
-.welcome h2{
-margin:0 0 8px;
-color:#6a5acd;
+/* DASHBOARD */
+
+.dashboard{
+  background:linear-gradient(135deg,#f4f1ff,#fff6fb);
+  border:2px solid #e6e0ff;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:20px;
 }
 
-.welcome p{
-color:#666;
-line-height:1.5;
+.dashboard-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
 }
 
-.quick-start{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+.greeting{
+  font-size:28px;
+  font-weight:900;
+  color:var(--primary);
 }
 
-.quick-button{
-flex:1;
-min-width:150px;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#6a5acd;
-color:#fff;
-font-weight:bold;
+.date{
+  color:var(--muted);
+  margin-top:5px;
 }
 
-.hide-welcome{
-margin-top:12px;
-background:none;
-border:none;
-color:#777;
-font-size:13px;
+.start-day{
+  border:none;
+  border-radius:12px;
+  padding:13px 18px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
+  box-shadow:0 6px 15px rgba(106,90,205,.25);
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.dashboard-stat{
+  background:#fff;
+  border-radius:14px;
+  padding:15px;
+  text-align:center;
+}
+
+.dashboard-number{
+  font-size:27px;
+  font-weight:900;
+  color:var(--primary);
+}
+
+.dashboard-label{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.day-message{
+  margin-top:15px;
+  background:#fff;
+  padding:14px;
+  border-radius:12px;
+  line-height:1.5;
+  color:#555;
+}
+
+/* TODAY FOCUS */
+
+.today-focus{
+  background:#fff;
+  border:3px solid var(--primary);
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:20px;
+}
+
+.section-title{
+  color:var(--primary);
+  margin-top:0;
+}
+
+.focus-card{
+  background:var(--light);
+  border-radius:15px;
+  padding:18px;
+}
+
+.focus-label{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  font-weight:bold;
+}
+
+.focus-title{
+  font-size:24px;
+  font-weight:900;
+  color:var(--primary);
+  margin:7px 0;
+  line-height:1.35;
+}
+
+.focus-meta{
+  color:var(--muted);
+  margin-bottom:15px;
+}
+
+.focus-actions{
+  display:flex;
+  gap:10px;
+}
+
+.primary{
+  flex:1;
+  border:none;
+  border-radius:10px;
+  padding:12px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
+}
+
+.secondary{
+  flex:1;
+  border:2px solid var(--primary);
+  border-radius:10px;
+  padding:11px;
+  background:#fff;
+  color:var(--primary);
+  font-weight:bold;
 }
 
 /* CARDS */
 
 .card{
-border-radius:18px;
-padding:22px;
-margin-bottom:20px;
+  border-radius:18px;
+  padding:21px;
+  margin-bottom:20px;
 }
 
 .card h2{
-margin-top:0;
+  margin-top:0;
 }
 
-/* DAILY COACH */
-
-.daily-coach{
-background:linear-gradient(135deg,#f5f3ff,#fff7fb);
-border:2px solid #e4defd;
+.welcome{
+  background:linear-gradient(135deg,#f5f3ff,#fff7fb);
+  border:2px solid #e6e0ff;
 }
 
-.greeting{
-font-size:28px;
-font-weight:800;
-color:#6a5acd;
+.quick-start{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
-.date-text{
-color:#777;
-margin:6px 0 16px;
+.quick-button{
+  flex:1;
+  min-width:150px;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
 }
 
-.coach-message{
-background:#fff;
-padding:15px;
-border-radius:12px;
-color:#555;
-line-height:1.5;
-}
-
-/* SMART COACH */
-
-.smart-coach{
-background:#f4f1ff;
-border:3px solid #6a5acd;
-}
-
-.smart-coach h2{
-color:#6a5acd;
-}
-
-.coach-status{
-font-size:13px;
-color:#777;
-margin-bottom:12px;
-}
-
-.coach-recommendation{
-background:#fff;
-border-radius:14px;
-padding:18px;
-}
-
-.recommendation-label{
-font-size:13px;
-font-weight:bold;
-color:#777;
-text-transform:uppercase;
-letter-spacing:.5px;
-}
-
-.recommendation-title{
-font-size:24px;
-font-weight:800;
-color:#6a5acd;
-line-height:1.4;
-margin:8px 0;
-}
-
-.recommendation-meta{
-color:#777;
-margin-bottom:15px;
-}
-
-.coach-buttons{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.coach-primary,
-.coach-secondary{
-flex:1;
-min-width:160px;
-padding:13px;
-border-radius:10px;
-font-weight:bold;
-}
-
-.coach-primary{
-border:none;
-background:#6a5acd;
-color:#fff;
-}
-
-.coach-secondary{
-border:2px solid #6a5acd;
-background:#fff;
-color:#6a5acd;
+.hide-welcome{
+  margin-top:10px;
+  border:none;
+  background:none;
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* GOAL */
 
 .goal-box{
-background:#f7f5ff;
-}
-
-.goal-box h2{
-color:#6a5acd;
+  background:#f7f5ff;
 }
 
 .goal-description{
-color:#666;
-line-height:1.5;
+  color:#666;
 }
 
 #goalInput{
-width:100%;
-padding:14px;
-border:2px solid #ddd;
-border-radius:10px;
-outline:none;
-margin-bottom:10px;
+  width:100%;
+  padding:14px;
+  border:2px solid #ddd;
+  border-radius:10px;
+  outline:none;
+  margin-bottom:10px;
 }
 
-#goalInput:focus{
-border-color:#6a5acd;
+#goalInput:focus,
+#taskInput:focus{
+  border-color:var(--primary);
 }
 
 .goal-controls{
-display:flex;
-gap:10px;
+  display:flex;
+  gap:10px;
 }
 
 select{
-padding:12px;
-border:2px solid #ddd;
-border-radius:10px;
-background:#fff;
+  padding:12px;
+  border:2px solid #ddd;
+  border-radius:10px;
+  background:#fff;
 }
 
 #goalCategory{
-flex:1;
+  flex:1;
 }
 
 .goal-button{
-flex:1;
-border:none;
-border-radius:10px;
-background:#6a5acd;
-color:#fff;
-font-weight:bold;
+  flex:1;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
 }
 
 .current-goal{
-display:none;
-margin-top:15px;
-padding:15px;
-background:#fff;
-border-radius:12px;
+  display:none;
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
 }
 
-.change-goal-button{
-width:100%;
-margin-top:12px;
-padding:10px;
-border:2px solid #6a5acd;
-border-radius:10px;
-background:#fff;
-color:#6a5acd;
+.change-goal{
+  width:100%;
+  margin-top:10px;
+  border:2px solid var(--primary);
+  background:#fff;
+  color:var(--primary);
+  padding:10px;
+  border-radius:10px;
 }
 
 /* PLAN */
 
-.daily-plan{
-background:#fff7fb;
-border:2px solid #ffd4e9;
-}
-
-.daily-plan h2{
-color:#6a5acd;
-}
-
-.plan-intro{
-color:#666;
+.plan-box{
+  background:#fff7fb;
+  border:2px solid #ffd6e8;
 }
 
 .plan-list{
-list-style:none;
-padding:0;
-margin:15px 0;
+  list-style:none;
+  padding:0;
+  margin:0;
 }
 
 .plan-item{
-display:flex;
-align-items:center;
-gap:12px;
-padding:15px;
-background:#fff;
-border:1px solid #eee;
-border-radius:12px;
-margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#fff;
+  border:1px solid #eee;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:9px;
 }
 
 .plan-number{
-width:34px;
-height:34px;
-min-width:34px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-background:#6a5acd;
-color:#fff;
-font-weight:bold;
+  width:34px;
+  height:34px;
+  min-width:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
 }
 
 .plan-content{
-flex:1;
+  flex:1;
 }
 
 .plan-title{
-display:block;
-font-weight:bold;
-margin-bottom:5px;
+  font-weight:bold;
 }
 
 .plan-time{
-font-size:13px;
-color:#777;
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
 }
 
-.plan-button{
-border:none;
-border-radius:8px;
-padding:9px 11px;
-background:#4caf50;
-color:#fff;
-}
-
-/* FOCUS SESSION */
-
-.focus-session{
-display:none;
-background:#202020;
-color:#fff;
-border:3px solid #6a5acd;
-text-align:center;
-}
-
-.focus-session h2{
-color:#fff;
-}
-
-.focus-task{
-font-size:22px;
-font-weight:800;
-line-height:1.4;
-margin:15px auto;
-max-width:700px;
-}
-
-.timer{
-font-size:72px;
-font-weight:800;
-letter-spacing:2px;
-margin:15px 0;
-}
-
-.timer-status{
-color:#bbb;
-margin-bottom:15px;
-}
-
-.session-buttons{
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-}
-
-.session-button{
-padding:12px 18px;
-border-radius:10px;
-font-weight:bold;
-}
-
-.start-session{
-border:none;
-background:#4caf50;
-color:#fff;
-}
-
-.end-session{
-border:none;
-background:#ff69b4;
-color:#fff;
-}
-
-.exit-session{
-border:2px solid #aaa;
-background:transparent;
-color:#fff;
-}
-
-/* REFLECTION */
-
-.reflection{
-display:none;
-background:#fff9ed;
-border:2px solid #ffe0a3;
-}
-
-.reflection h2{
-color:#d88900;
-}
-
-.reflection-buttons{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.reflection-button{
-flex:1;
-min-width:150px;
-padding:13px;
-border-radius:10px;
-font-weight:bold;
-}
-
-.reflection-complete{
-border:none;
-background:#4caf50;
-color:#fff;
-}
-
-.reflection-partial{
-border:none;
-background:#ff9800;
-color:#fff;
-}
-
-.reflection-skip{
-border:2px solid #777;
-background:#fff;
-color:#555;
-}
-
-/* STATS */
-
-.stats-box{
-background:#f7f5ff;
-}
-
-.stats-box h2{
-color:#6a5acd;
-}
-
-.stats-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-}
-
-.stat{
-background:#fff;
-padding:16px;
-border-radius:12px;
-text-align:center;
-}
-
-.stat-number{
-font-size:28px;
-font-weight:800;
-color:#6a5acd;
-}
-
-.stat-label{
-font-size:13px;
-color:#777;
-margin-top:5px;
-}
-
-/* STREAK */
-
-.streak-box{
-background:#fff8e8;
-border:2px solid #ffd98a;
-}
-
-.streak-box h2{
-color:#d88900;
-}
-
-.streak-main{
-text-align:center;
-background:#fff;
-padding:20px;
-border-radius:14px;
-}
-
-.streak-number{
-font-size:48px;
-font-weight:800;
-color:#d88900;
-}
-
-.streak-label{
-color:#777;
-}
-
-/* WEEK */
-
-.week-box{
-background:#f8f8ff;
-}
-
-.week-box h2{
-color:#6a5acd;
-}
-
-.week-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:7px;
-}
-
-.day{
-text-align:center;
-padding:10px 4px;
-border-radius:10px;
-background:#fff;
-border:1px solid #eee;
-}
-
-.day-name{
-font-size:11px;
-color:#777;
-}
-
-.day-icon{
-font-size:20px;
-margin:6px 0;
-}
-
-.day-count{
-font-size:12px;
-font-weight:bold;
-color:#6a5acd;
-}
-
-/* ACHIEVEMENTS */
-
-.achievements-box{
-background:#fff7fb;
-border:2px solid #ffd6e8;
-}
-
-.achievements-box h2{
-color:#6a5acd;
-}
-
-.achievement-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.achievement{
-padding:15px;
-border-radius:12px;
-background:#fff;
-border:2px solid #eee;
-}
-
-.achievement.unlocked{
-border-color:#6a5acd;
-}
-
-.achievement-icon{
-font-size:30px;
-}
-
-.achievement-title{
-font-weight:bold;
-margin-top:5px;
-}
-
-.achievement-description{
-font-size:12px;
-color:#777;
-margin-top:4px;
+.plan-done{
+  border:none;
+  background:var(--success);
+  color:#fff;
+  border-radius:8px;
+  padding:9px;
 }
 
 /* PROGRESS */
 
 .progress-box{
-background:#f7f5ff;
-}
-
-.progress-box h2{
-color:#6a5acd;
+  background:#f7f5ff;
 }
 
 .progress-bar{
-width:100%;
-height:14px;
-background:#e9e9e9;
-border-radius:20px;
-overflow:hidden;
+  width:100%;
+  height:15px;
+  background:#e7e7e7;
+  border-radius:20px;
+  overflow:hidden;
 }
 
 .progress-fill{
-height:100%;
-width:0%;
-background:#6a5acd;
-transition:width .3s;
+  width:0%;
+  height:100%;
+  background:var(--primary);
+  transition:.3s;
 }
 
 .progress-text{
-text-align:center;
-color:#666;
-font-size:14px;
+  text-align:center;
+  color:#666;
+  font-size:13px;
+}
+
+/* TARGET */
+
+.target-box{
+  background:#f4fff5;
+  border:2px solid #c9efcc;
+}
+
+.target-status{
+  color:#368a3d;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+/* WEEKLY */
+
+.week-box{
+  background:#fafaff;
+}
+
+.week-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px;
+}
+
+.day{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:10px;
+  text-align:center;
+  padding:10px 4px;
+}
+
+.day.today{
+  border:2px solid var(--primary);
+}
+
+.day-name{
+  color:#777;
+  font-size:11px;
+}
+
+.day-icon{
+  font-size:20px;
+  margin:5px 0;
+}
+
+.day-count{
+  color:var(--primary);
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* STREAK */
+
+.streak-box{
+  background:#fff8e8;
+  border:2px solid #ffd98a;
+}
+
+.streak-display{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+}
+
+.streak-number{
+  font-size:50px;
+  font-weight:900;
+  color:var(--warning);
+}
+
+.streak-copy{
+  flex:1;
+}
+
+.streak-title{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.streak-text{
+  color:#777;
+  margin-top:5px;
+}
+
+/* ACHIEVEMENTS */
+
+.achievement-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.achievement{
+  background:#fff;
+  border:2px solid #eee;
+  border-radius:12px;
+  padding:14px;
+}
+
+.achievement.unlocked{
+  border-color:var(--primary);
+}
+
+.achievement-icon{
+  font-size:28px;
+}
+
+.achievement-title{
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.achievement-description{
+  color:#777;
+  font-size:12px;
+  margin-top:4px;
 }
 
 /* ACTIONS */
 
 .actions-box{
-background:#fafaff;
-}
-
-.actions-box h2{
-color:#6a5acd;
+  background:#fafaff;
 }
 
 .input-area{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:15px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 #taskInput{
-flex:2;
-min-width:190px;
-padding:13px;
-border:2px solid #ddd;
-border-radius:10px;
-outline:none;
-}
-
-#taskInput:focus{
-border-color:#6a5acd;
+  flex:2;
+  min-width:190px;
+  padding:13px;
+  border:2px solid #ddd;
+  border-radius:10px;
+  outline:none;
 }
 
 #prioritySelect,
 #timeSelect{
-flex:1;
-min-width:120px;
+  flex:1;
+  min-width:110px;
 }
 
 .add-button{
-padding:13px 16px;
-border:none;
-border-radius:10px;
-background:#6a5acd;
-color:#fff;
-font-weight:bold;
+  border:none;
+  border-radius:10px;
+  padding:13px 16px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
 }
 
 .ai-button{
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:#ff69b4;
-color:#fff;
-font-weight:bold;
-margin-bottom:20px;
+  width:100%;
+  margin:14px 0;
+  padding:13px;
+  border:none;
+  border-radius:10px;
+  background:var(--secondary);
+  color:#fff;
+  font-weight:bold;
+}
+
+#taskList{
+  list-style:none;
+  padding:0;
+}
+
+#taskList li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  border:1px solid #eee;
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:9px;
+}
+
+.task-text{
+  flex:1;
+  cursor:pointer;
+}
+
+.completed{
+  text-decoration:line-through;
+  color:#999;
+}
+
+.task-time{
+  color:#777;
+  font-size:12px;
+}
+
+.delete-button{
+  border:none;
+  border-radius:8px;
+  background:var(--secondary);
+  color:#fff;
+  padding:8px 10px;
+}
+
+.task-counter{
+  text-align:center;
+  color:var(--primary);
+  font-weight:bold;
+}
+
+.clear-button{
+  display:block;
+  margin:14px auto 0;
+  border:2px solid var(--secondary);
+  background:#fff;
+  color:var(--secondary);
+  border-radius:10px;
+  padding:10px 15px;
 }
 
 /* SUGGESTIONS */
 
-.suggestions-box{
-display:none;
-background:#fff7fb;
-border:2px solid #ffd1e7;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
+.suggestions{
+  display:none;
+  background:#fff7fb;
+  border:2px solid #ffd1e7;
+  padding:18px;
+  border-radius:14px;
+  margin-bottom:15px;
 }
 
-.suggestions-box h2{
-color:#6a5acd;
+.suggestion{
+  background:#fff;
+  padding:11px;
+  border-radius:9px;
+  margin-bottom:7px;
 }
 
-.suggestion-item{
-display:flex;
-gap:10px;
-align-items:center;
-background:#fff;
-padding:12px;
-border-radius:10px;
-margin-bottom:8px;
+.suggestion-actions{
+  display:flex;
+  gap:10px;
 }
 
-.suggestion-buttons{
-display:flex;
-gap:10px;
-margin-top:15px;
+.suggestion-actions button{
+  flex:1;
+  padding:11px;
+  border-radius:9px;
 }
 
-.add-selected-button,
-.cancel-button{
-flex:1;
-padding:12px;
-border-radius:10px;
-font-weight:bold;
+.add-suggestions{
+  border:none;
+  background:var(--primary);
+  color:#fff;
 }
 
-.add-selected-button{
-border:none;
-background:#6a5acd;
-color:#fff;
+.cancel-suggestions{
+  border:2px solid var(--secondary);
+  background:#fff;
+  color:var(--secondary);
 }
 
-.cancel-button{
-border:2px solid #ff69b4;
-background:#fff;
-color:#ff69b4;
+/* STATS */
+
+.stats-box{
+  background:#f7f5ff;
 }
 
-/* TASKS */
-
-#taskList{
-list-style:none;
-padding:0;
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
-#taskList li{
-display:flex;
-align-items:center;
-gap:10px;
-background:#fff;
-border:1px solid #eee;
-padding:13px;
-border-radius:10px;
-margin-bottom:9px;
+.stat{
+  background:#fff;
+  padding:16px;
+  text-align:center;
+  border-radius:12px;
 }
 
-.task-text{
-flex:1;
-cursor:pointer;
+.stat-number{
+  font-size:28px;
+  font-weight:900;
+  color:var(--primary);
 }
 
-.completed{
-text-decoration:line-through;
-color:#999;
+.stat-label{
+  color:#777;
+  font-size:12px;
+  margin-top:5px;
 }
 
-.task-time{
-font-size:13px;
-color:#777;
-white-space:nowrap;
+/* FOCUS */
+
+.focus-session{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  margin:0;
+  border-radius:0;
+  background:#202020;
+  color:#fff;
+  text-align:center;
+  padding:35px 20px;
+  overflow:auto;
 }
 
-.delete-button{
-border:none;
-background:#ff69b4;
-color:#fff;
-padding:8px 10px;
-border-radius:8px;
+.focus-session h2{
+  color:#fff;
 }
 
-#taskCounter{
-text-align:center;
-color:#6a5acd;
-font-weight:bold;
+.focus-task{
+  max-width:700px;
+  margin:20px auto;
+  font-size:25px;
+  font-weight:900;
+  line-height:1.4;
 }
 
-.clear-button{
-display:block;
-margin:15px auto 0;
-padding:10px 15px;
-border:2px solid #ff69b4;
-border-radius:10px;
-background:#fff;
-color:#ff69b4;
+.timer{
+  font-size:80px;
+  font-weight:900;
+  margin:20px 0;
+}
+
+.timer-status{
+  color:#bbb;
+  margin-bottom:20px;
+}
+
+.session-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.session-buttons button{
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.start-timer{
+  border:none;
+  background:var(--success);
+  color:#fff;
+}
+
+.finish-timer{
+  border:none;
+  background:var(--secondary);
+  color:#fff;
+}
+
+.exit-timer{
+  border:2px solid #aaa;
+  background:transparent;
+  color:#fff;
+}
+
+/* REFLECTION */
+
+.reflection{
+  display:none;
+  background:#fff9ed;
+  border:2px solid #ffe0a3;
+}
+
+.reflection-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.reflection-buttons button{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.ref-complete{
+  border:none;
+  background:var(--success);
+  color:#fff;
+}
+
+.ref-partial{
+  border:none;
+  background:#ff9800;
+  color:#fff;
+}
+
+.ref-skip{
+  border:2px solid #777;
+  background:#fff;
+  color:#555;
 }
 
 /* BACKUP */
 
 .backup-box{
-background:#f5fbff;
-border:2px solid #ccecff;
-}
-
-.backup-box h2{
-color:#1677a8;
+  background:#f5fbff;
+  border:2px solid #ccecff;
 }
 
 .backup-buttons{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+  display:flex;
+  gap:10px;
 }
 
-.backup-button{
-flex:1;
-min-width:180px;
-padding:12px;
-border-radius:10px;
-font-weight:bold;
+.backup-buttons button{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  font-weight:bold;
 }
 
-.export-button{
-border:none;
-background:#1677a8;
-color:#fff;
+.export{
+  border:none;
+  background:#1677a8;
+  color:#fff;
 }
 
-.reset-button{
-border:2px solid #d9534f;
-background:#fff;
-color:#d9534f;
-}
-
-/* DAILY TARGET */
-
-.target-box{
-background:#f4fff5;
-border:2px solid #c9efcc;
-}
-
-.target-box h2{
-color:#368a3d;
-}
-
-.target-controls{
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.target-controls select{
-flex:1;
-}
-
-.target-status{
-margin-top:12px;
-font-weight:bold;
-color:#368a3d;
+.reset{
+  border:2px solid #d9534f;
+  background:#fff;
+  color:#d9534f;
 }
 
 /* TOAST */
 
-.success-message{
-display:none;
-position:fixed;
-left:50%;
-bottom:25px;
-transform:translateX(-50%);
-background:#222;
-color:#fff;
-padding:13px 18px;
-border-radius:30px;
-box-shadow:0 8px 25px rgba(0,0,0,.25);
-z-index:1000;
-font-weight:bold;
-}
-
-/* FOCUS MODE */
-
-body.focus-mode{
-background:#202020;
-padding:0;
-}
-
-body.focus-mode .app{
-max-width:100%;
-min-height:100vh;
-border-radius:0;
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-body.focus-mode .header,
-body.focus-mode .welcome,
-body.focus-mode .daily-coach,
-body.focus-mode .smart-coach,
-body.focus-mode .goal-box,
-body.focus-mode .daily-plan,
-body.focus-mode .reflection,
-body.focus-mode .streak-box,
-body.focus-mode .week-box,
-body.focus-mode .achievements-box,
-body.focus-mode .target-box,
-body.focus-mode .stats-box,
-body.focus-mode .progress-box,
-body.focus-mode .actions-box,
-body.focus-mode .backup-box{
-display:none!important;
-}
-
-body.focus-mode .focus-session{
-display:block!important;
+.toast{
+  display:none;
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:13px 18px;
+  border-radius:30px;
+  z-index:1000;
+  font-weight:bold;
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:750px){
+
+body{
+  padding:8px;
+}
 
 .app{
-padding:20px;
+  padding:15px;
+  border-radius:18px;
+}
+
+.header{
+  align-items:flex-start;
 }
 
 .logo{
-font-size:32px;
+  font-size:28px;
+}
+
+.header-badge{
+  font-size:11px;
+}
+
+.dashboard-top{
+  flex-direction:column;
+  align-items:stretch;
+}
+
+.start-day{
+  width:100%;
 }
 
 .greeting{
-font-size:24px;
+  font-size:24px;
 }
 
-.goal-controls,
-.target-controls{
-flex-direction:column;
+.dashboard-grid{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.goal-controls{
+  flex-direction:column;
 }
 
 .input-area{
-flex-direction:column;
+  flex-direction:column;
 }
 
 #taskInput,
 #prioritySelect,
 #timeSelect,
 .add-button{
-width:100%;
-}
-
-.plan-item{
-align-items:flex-start;
-}
-
-.task-time{
-display:none;
-}
-
-.stats-grid{
-grid-template-columns:1fr;
+  width:100%;
 }
 
 .week-grid{
-grid-template-columns:repeat(7,1fr);
-gap:3px;
+  gap:3px;
 }
 
 .day{
-padding:8px 2px;
+  padding:8px 2px;
 }
 
 .day-icon{
-font-size:16px;
-}
-
-.day-count{
-font-size:10px;
+  font-size:16px;
 }
 
 .achievement-grid{
-grid-template-columns:1fr;
+  grid-template-columns:repeat(2,1fr);
+}
+
+.stats-grid{
+  grid-template-columns:1fr;
+}
+
+.focus-actions{
+  flex-direction:column;
+}
+
+.reflection-buttons{
+  flex-direction:column;
+}
+
+.backup-buttons{
+  flex-direction:column;
 }
 
 .timer{
-font-size:56px;
+  font-size:58px;
 }
 
-.coach-buttons{
-flex-direction:column;
+.focus-task{
+  font-size:21px;
 }
 
-.backup-buttons,
-.reflection-buttons{
-flex-direction:column;
+.streak-display{
+  flex-direction:column;
+  text-align:center;
 }
 
 }
@@ -997,125 +966,161 @@ flex-direction:column;
 <div class="app">
 
 <header class="header">
-<div class="logo">🎯 FocusFlow</div>
-<p class="subtitle">
-One goal. Clear priorities. Smarter focus.
-</p>
+
+<div>
+  <div class="logo">🎯 FocusFlow</div>
+  <p class="subtitle">One goal. One day. One step at a time.</p>
+</div>
+
+<div class="header-badge">V8 • LIVE BUILD</div>
+
 </header>
 
 
 <!-- WELCOME -->
 
-<div id="welcomeBox" class="welcome">
+<div id="welcome" class="card welcome">
 
 <h2>👋 Welcome to FocusFlow</h2>
 
 <p>
-Turn a big goal into small actions, build your streak,
-and let FocusFlow help you stay consistent.
+Start with one meaningful goal. FocusFlow will turn it into
+small actions and help you stay consistent.
 </p>
 
 <div class="quick-start">
 
 <button class="quick-button"
-onclick="startQuickGoal('Learn a new skill')">
-📚 Learn Something
-</button>
-
-<button class="quick-button"
-onclick="startQuickGoal('Build an online business')">
+onclick="quickGoal('Build an online business')">
 💼 Build a Business
 </button>
 
 <button class="quick-button"
-onclick="startQuickGoal('Make money online')">
+onclick="quickGoal('Learn a new skill')">
+📚 Learn a Skill
+</button>
+
+<button class="quick-button"
+onclick="quickGoal('Make money online')">
 💰 Make Money
 </button>
 
 </div>
 
-<button class="hide-welcome"
-onclick="hideWelcome()">
-Hide welcome message
+<button class="hide-welcome" onclick="hideWelcome()">
+Hide this message
 </button>
 
 </div>
 
 
-<!-- DAILY COACH -->
+<!-- V8 DASHBOARD -->
 
-<div class="card daily-coach">
+<section class="dashboard">
+
+<div class="dashboard-top">
+
+<div>
 
 <div id="greeting" class="greeting">
 Good morning 👋
 </div>
 
-<div id="dateText" class="date-text"></div>
-
-<div id="coachMessage" class="coach-message">
-Set a goal and FocusFlow will help you plan your day.
-</div>
+<div id="date" class="date"></div>
 
 </div>
 
-
-<!-- SMART COACH -->
-
-<div class="card smart-coach">
-
-<h2>🧠 Smart Focus Coach</h2>
-
-<div id="coachStatus" class="coach-status">
-Set a goal and add actions to activate your coach.
-</div>
-
-<div class="coach-recommendation">
-
-<div class="recommendation-label">
-Recommended Next Action
-</div>
-
-<div id="recommendationTitle"
-class="recommendation-title">
-Your next best step will appear here.
-</div>
-
-<div id="recommendationMeta"
-class="recommendation-meta">
-FocusFlow will analyze your unfinished actions.
-</div>
-
-<div class="coach-buttons">
-
-<button class="coach-primary"
-onclick="startRecommendedSession()">
-▶️ Start Focus Session
-</button>
-
-<button class="coach-secondary"
-onclick="refreshRecommendation()">
-🔄 Recalculate
+<button class="start-day"
+onclick="startMyDay()">
+⚡ Start My Day
 </button>
 
 </div>
 
+
+<div class="dashboard-grid">
+
+<div class="dashboard-stat">
+<div id="dashDone" class="dashboard-number">0</div>
+<div class="dashboard-label">Done Today</div>
 </div>
+
+<div class="dashboard-stat">
+<div id="dashTarget" class="dashboard-number">0/3</div>
+<div class="dashboard-label">Daily Target</div>
 </div>
+
+<div class="dashboard-stat">
+<div id="dashStreak" class="dashboard-number">0🔥</div>
+<div class="dashboard-label">Day Streak</div>
+</div>
+
+<div class="dashboard-stat">
+<div id="dashMinutes" class="dashboard-number">0</div>
+<div class="dashboard-label">Focus Minutes</div>
+</div>
+
+</div>
+
+
+<div id="dayMessage" class="day-message">
+Set your goal and start your day.
+</div>
+
+</section>
+
+
+<!-- TODAY'S FOCUS -->
+
+<section class="today-focus">
+
+<h2 class="section-title">🎯 Today's Focus</h2>
+
+<div class="focus-card">
+
+<div class="focus-label">
+Your most important next action
+</div>
+
+<div id="todayFocusTitle" class="focus-title">
+Set a goal to activate Today's Focus.
+</div>
+
+<div id="todayFocusMeta" class="focus-meta">
+FocusFlow will choose the best unfinished action for you.
+</div>
+
+<div class="focus-actions">
+
+<button class="primary"
+onclick="startRecommended()">
+▶️ Start Focus
+</button>
+
+<button class="secondary"
+onclick="refreshCoach()">
+🔄 Refresh
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 
 <!-- GOAL -->
 
 <div class="card goal-box">
 
-<h2>🎯 What's something you want to accomplish?</h2>
+<h2>🎯 Your Goal</h2>
 
 <p class="goal-description">
-Tell FocusFlow what you want to achieve.
+What do you want to accomplish?
 </p>
 
 <input
 id="goalInput"
-type="text"
 placeholder="Example: Launch my online business"
 >
 
@@ -1131,18 +1136,18 @@ placeholder="Example: Launch my online business"
 </select>
 
 <button class="goal-button"
-onclick="setGoal()">
-🚀 Start My Goal
+onclick="saveGoal()">
+🚀 Save Goal
 </button>
 
 </div>
 
 <div id="currentGoal" class="current-goal">
 
-<div id="goalText"></div>
+<div id="goalDisplay"></div>
 
-<button class="change-goal-button"
-onclick="changeGoal()">
+<button class="change-goal"
+onclick="editGoal()">
 🔄 Change Goal
 </button>
 
@@ -1151,29 +1156,286 @@ onclick="changeGoal()">
 </div>
 
 
-<!-- DAILY PLAN -->
+<!-- PLAN -->
 
-<div class="card daily-plan">
+<div class="card plan-box">
 
 <h2>📅 Today's Plan</h2>
 
-<p class="plan-intro">
-Your top three unfinished actions for today.
+<ul id="planList" class="plan-list"></ul>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="card progress-box">
+
+<h2>📈 Goal Progress</h2>
+
+<p id="progressSummary">
+Set a goal and add your first action.
 </p>
 
-<ul id="dailyPlanList" class="plan-list"></ul>
+<div class="progress-bar">
+<div id="progressFill" class="progress-fill"></div>
+</div>
 
-<button class="refresh-plan"
-onclick="updateDailyPlan()">
-🔄 Refresh Today's Plan
+<p id="progressText" class="progress-text">
+0% complete
+</p>
+
+</div>
+
+
+<!-- DAILY TARGET -->
+
+<div class="card target-box">
+
+<h2>🎯 Daily Target</h2>
+
+<p>
+How many actions do you want to complete today?
+</p>
+
+<select id="dailyTarget"
+onchange="changeTarget()">
+
+<option value="1">1 action</option>
+<option value="2">2 actions</option>
+<option value="3">3 actions</option>
+<option value="5">5 actions</option>
+<option value="10">10 actions</option>
+
+</select>
+
+<div id="targetStatus" class="target-status">
+0 / 3 actions completed today
+</div>
+
+</div>
+
+
+<!-- WEEK -->
+
+<div class="card week-box">
+
+<h2>📅 Your Week</h2>
+
+<div id="weekGrid" class="week-grid"></div>
+
+</div>
+
+
+<!-- STREAK -->
+
+<div class="card streak-box">
+
+<h2>🔥 Streak Protection</h2>
+
+<div class="streak-display">
+
+<div id="streakNumber" class="streak-number">
+0
+</div>
+
+<div class="streak-copy">
+
+<div id="streakTitle" class="streak-title">
+Start your streak today.
+</div>
+
+<div id="streakText" class="streak-text">
+Complete an action or focus session to keep your streak alive.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ACHIEVEMENTS -->
+
+<div class="card">
+
+<h2 class="section-title">🏆 Achievements</h2>
+
+<div id="achievementGrid"
+class="achievement-grid">
+</div>
+
+</div>
+
+
+<!-- ACTIONS -->
+
+<div class="card actions-box">
+
+<h2>📝 Actions</h2>
+
+<div class="input-area">
+
+<input
+id="taskInput"
+placeholder="What's your next action?"
+>
+
+<select id="priority">
+<option value="high">🔴 High</option>
+<option value="medium" selected>🟡 Medium</option>
+<option value="low">🟢 Low</option>
+</select>
+
+<select id="time">
+<option value="15">15 min</option>
+<option value="30" selected>30 min</option>
+<option value="45">45 min</option>
+<option value="60">60 min</option>
+<option value="90">90 min</option>
+</select>
+
+<button class="add-button"
+onclick="addTask()">
+➕ Add
 </button>
 
 </div>
 
 
-<!-- FOCUS SESSION -->
+<button class="ai-button"
+onclick="suggestSteps()">
+✨ Suggest Steps From My Goal
+</button>
 
-<div id="focusSession" class="card focus-session">
+
+<div id="suggestions"
+class="suggestions">
+
+<h3>✨ Suggested Steps</h3>
+
+<div id="suggestionList"></div>
+
+<div class="suggestion-actions">
+
+<button class="add-suggestions"
+onclick="addSuggestions()">
+➕ Add Selected
+</button>
+
+<button class="cancel-suggestions"
+onclick="closeSuggestions()">
+Cancel
+</button>
+
+</div>
+
+</div>
+
+
+<ul id="taskList"></ul>
+
+<p id="taskCounter" class="task-counter">
+No actions yet.
+</p>
+
+<button class="clear-button"
+onclick="clearCompleted()">
+🧹 Clear Completed
+</button>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="card stats-box">
+
+<h2 class="section-title">📊 Focus Statistics</h2>
+
+<div class="stats-grid">
+
+<div class="stat">
+<div id="sessions" class="stat-number">0</div>
+<div class="stat-label">Focus Sessions</div>
+</div>
+
+<div class="stat">
+<div id="minutes" class="stat-number">0</div>
+<div class="stat-label">Focus Minutes</div>
+</div>
+
+<div class="stat">
+<div id="completedTotal" class="stat-number">0</div>
+<div class="stat-label">Actions Completed</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REFLECTION -->
+
+<div id="reflection" class="card reflection">
+
+<h2>💭 How did that session go?</h2>
+
+<div class="reflection-buttons">
+
+<button class="ref-complete"
+onclick="reflect('complete')">
+🎉 Completed
+</button>
+
+<button class="ref-partial"
+onclick="reflect('partial')">
+💪 Partially Done
+</button>
+
+<button class="ref-skip"
+onclick="reflect('skip')">
+⏭️ Didn't Finish
+</button>
+
+</div>
+
+</div>
+
+
+<!-- BACKUP -->
+
+<div class="card backup-box">
+
+<h2>💾 Data Backup</h2>
+
+<p>
+Keep a personal copy of your FocusFlow progress.
+</p>
+
+<div class="backup-buttons">
+
+<button class="export"
+onclick="exportData()">
+⬇️ Export Data
+</button>
+
+<button class="reset"
+onclick="resetApp()">
+⚠️ Reset Data
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FOCUS MODE -->
+
+<div id="focusSession" class="focus-session">
 
 <h2>🧘 Focus Session</h2>
 
@@ -1191,20 +1453,20 @@ Ready when you are.
 
 <div class="session-buttons">
 
-<button id="startTimerButton"
-class="session-button start-session"
+<button id="timerButton"
+class="start-timer"
 onclick="toggleTimer()">
 ▶️ Start
 </button>
 
-<button class="session-button end-session"
-onclick="finishSession(false)">
+<button class="finish-timer"
+onclick="finishSession()">
 ✅ Finish
 </button>
 
-<button class="session-button exit-session"
-onclick="exitFocusMode()">
-Exit Focus
+<button class="exit-timer"
+onclick="exitFocus()">
+Exit
 </button>
 
 </div>
@@ -1212,410 +1474,68 @@ Exit Focus
 </div>
 
 
-<!-- REFLECTION -->
-
-<div id="reflectionBox" class="card reflection">
-
-<h2>💭 How did that focus session go?</h2>
-
-<p>
-Choose what best describes the session.
-</p>
-
-<div class="reflection-buttons">
-
-<button class="reflection-button reflection-complete"
-onclick="completeReflection('complete')">
-🎉 Completed
-</button>
-
-<button class="reflection-button reflection-partial"
-onclick="completeReflection('partial')">
-💪 Partially Done
-</button>
-
-<button class="reflection-button reflection-skip"
-onclick="completeReflection('skip')">
-⏭️ Didn't Finish
-</button>
-
-</div>
-
-</div>
-
-
-<!-- DAILY TARGET -->
-
-<div class="card target-box">
-
-<h2>🎯 Daily Action Target</h2>
-
-<p>
-Choose how many actions you want to complete today.
-</p>
-
-<div class="target-controls">
-
-<select id="dailyTargetSelect"
-onchange="setDailyTarget()">
-
-<option value="1">1 action</option>
-<option value="2">2 actions</option>
-<option value="3" selected>3 actions</option>
-<option value="5">5 actions</option>
-<option value="10">10 actions</option>
-
-</select>
-
-</div>
-
-<div id="targetStatus"
-class="target-status">
-0 / 3 actions completed today
-</div>
-
-</div>
-
-
-<!-- STREAK -->
-
-<div class="card streak-box">
-
-<h2>🔥 Your Streak</h2>
-
-<div class="streak-main">
-
-<div id="streakNumber"
-class="streak-number">
-0
-</div>
-
-<div class="streak-label">
-consecutive active days
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WEEKLY ACTIVITY -->
-
-<div class="card week-box">
-
-<h2>📅 7-Day Activity</h2>
-
-<div id="weekGrid" class="week-grid"></div>
-
-</div>
-
-
-<!-- ACHIEVEMENTS -->
-
-<div class="card achievements-box">
-
-<h2>🏆 Achievements</h2>
-
-<div id="achievementGrid"
-class="achievement-grid">
-</div>
-
-</div>
-
-
-<!-- FOCUS STATS -->
-
-<div class="card stats-box">
-
-<h2>📊 Focus Stats</h2>
-
-<div class="stats-grid">
-
-<div class="stat">
-
-<div id="sessionCount"
-class="stat-number">
-0
-</div>
-
-<div class="stat-label">
-Focus Sessions
-</div>
-
-</div>
-
-<div class="stat">
-
-<div id="focusMinutes"
-class="stat-number">
-0
-</div>
-
-<div class="stat-label">
-Focus Minutes
-</div>
-
-</div>
-
-<div class="stat">
-
-<div id="completedActions"
-class="stat-number">
-0
-</div>
-
-<div class="stat-label">
-Actions Completed
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- PROGRESS -->
-
-<div class="card progress-box">
-
-<h2>📈 Goal Progress</h2>
-
-<p id="focusSummary">
-Set a goal and start taking action!
-</p>
-
-<div class="progress-bar">
-
-<div id="progressFill"
-class="progress-fill">
-</div>
-
-</div>
-
-<p id="progressText"
-class="progress-text">
-0% complete
-</p>
-
-</div>
-
-
-<!-- ACTIONS -->
-
-<div class="card actions-box">
-
-<h2>📝 Your Actions</h2>
-
-<div class="input-area">
-
-<input
-id="taskInput"
-type="text"
-placeholder="What's your next action?"
->
-
-<select id="prioritySelect">
-
-<option value="high">🔴 High</option>
-<option value="medium" selected>🟡 Medium</option>
-<option value="low">🟢 Low</option>
-
-</select>
-
-<select id="timeSelect">
-
-<option value="15">15 min</option>
-<option value="30" selected>30 min</option>
-<option value="45">45 min</option>
-<option value="60">60 min</option>
-<option value="90">90 min</option>
-
-</select>
-
-<button class="add-button"
-onclick="addTask()">
-➕ Add Action
-</button>
-
-</div>
-
-<button class="ai-button"
-onclick="breakGoal()">
-✨ Suggest Steps
-</button>
-
-
-<!-- SUGGESTIONS -->
-
-<div id="suggestionsBox"
-class="suggestions-box">
-
-<h2>✨ Suggested Steps</h2>
-
-<p>
-Choose the steps you want FocusFlow to add.
-</p>
-
-<div id="suggestionsList"></div>
-
-<div class="suggestion-buttons">
-
-<button class="add-selected-button"
-onclick="addSelectedSteps()">
-➕ Add Selected Actions
-</button>
-
-<button class="cancel-button"
-onclick="closeSuggestions()">
-Cancel
-</button>
-
-</div>
-
-</div>
-
-
-<ul id="taskList"></ul>
-
-<p id="taskCounter">
-📝 No actions yet. Add your first action above!
-</p>
-
-<button class="clear-button"
-onclick="clearCompleted()">
-🧹 Clear Completed
-</button>
-
-</div>
-
-
-<!-- BACKUP -->
-
-<div class="card backup-box">
-
-<h2>💾 Your Data</h2>
-
-<p>
-Export your FocusFlow data so you can keep a personal backup.
-</p>
-
-<div class="backup-buttons">
-
-<button class="backup-button export-button"
-onclick="exportData()">
-⬇️ Export My Data
-</button>
-
-<button class="backup-button reset-button"
-onclick="confirmReset()">
-⚠️ Reset App Data
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div id="successMessage"
-class="success-message">
-</div>
+<div id="toast" class="toast"></div>
 
 
 <script>
 
 /* =====================================================
-   FOCUSFLOW V7
-   RETENTION + MOTIVATION
+   FOCUSFLOW V8
+   PERSONAL DASHBOARD + RETENTION
 ===================================================== */
 
 
-/* =========================
-   DATA
-========================= */
+/* -------------------------
+   STATE
+------------------------- */
 
 let tasks =
-JSON.parse(
-localStorage.getItem("focusflowTasks")
-) || [];
+JSON.parse(localStorage.getItem("focusflowTasks")) || [];
 
-let currentGoal =
-localStorage.getItem("focusflowGoal")
-|| "";
+let goal =
+localStorage.getItem("focusflowGoal") || "";
 
-let currentGoalCategory =
-localStorage.getItem("focusflowGoalCategory")
-|| "learning";
-
-let suggestedSteps = [];
+let goalCategory =
+localStorage.getItem("focusflowGoalCategory") || "learning";
 
 let dailyStats =
-JSON.parse(
-localStorage.getItem("focusflowDailyStats")
-) || {};
-
-let welcomeHidden =
-localStorage.getItem("focusflowWelcomeHidden")
-=== "true";
-
+JSON.parse(localStorage.getItem("focusflowDailyStats")) || {};
 
 let focusStats =
-JSON.parse(
-localStorage.getItem("focusflowV6Stats")
-) || {
-sessions:0,
-minutes:0
+JSON.parse(localStorage.getItem("focusflowV6Stats")) || {
+  sessions:0,
+  minutes:0
 };
 
-
-/* V7 */
-
 let dailyTarget =
-parseInt(
-localStorage.getItem("focusflowDailyTarget")
-) || 3;
+parseInt(localStorage.getItem("focusflowDailyTarget")) || 3;
 
-let achievementState =
-JSON.parse(
-localStorage.getItem("focusflowAchievements")
-) || {};
+let achievements =
+JSON.parse(localStorage.getItem("focusflowAchievements")) || {};
 
 let totalSessions =
-parseInt(
-localStorage.getItem("focusflowTotalSessions")
-) || 0;
+parseInt(localStorage.getItem("focusflowTotalSessions")) || 0;
 
 let totalFocusMinutes =
-parseInt(
-localStorage.getItem("focusflowTotalFocusMinutes")
-) || 0;
+parseInt(localStorage.getItem("focusflowTotalFocusMinutes")) || 0;
+
+let welcomeHidden =
+localStorage.getItem("focusflowWelcomeHidden") === "true";
+
+let suggestions = [];
+
+let activeIndex = null;
+let remainingSeconds = 0;
+let sessionMinutes = 30;
+let timerInterval = null;
+let sessionRunning = false;
 
 
-/* SESSION */
-
-let activeSessionTaskIndex =
-null;
-
-let activeSessionMinutes =
-30;
-
-let remainingSeconds =
-1800;
-
-let timerInterval =
-null;
-
-let sessionRunning =
-false;
-
-
-/* =========================
+/* -------------------------
    SAVE
-========================= */
+------------------------- */
 
-function saveData(){
+function save(){
 
 localStorage.setItem(
 "focusflowTasks",
@@ -1624,12 +1544,12 @@ JSON.stringify(tasks)
 
 localStorage.setItem(
 "focusflowGoal",
-currentGoal
+goal
 );
 
 localStorage.setItem(
 "focusflowGoalCategory",
-currentGoalCategory
+goalCategory
 );
 
 localStorage.setItem(
@@ -1649,7 +1569,7 @@ dailyTarget
 
 localStorage.setItem(
 "focusflowAchievements",
-JSON.stringify(achievementState)
+JSON.stringify(achievements)
 );
 
 localStorage.setItem(
@@ -1665,67 +1585,103 @@ totalFocusMinutes
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* -------------------------
+   TOAST
+------------------------- */
 
-function showMessage(message){
+function toast(message){
 
-let box =
-document.getElementById(
-"successMessage"
-);
+const box =
+document.getElementById("toast");
 
-box.textContent =
-message;
+box.textContent = message;
+box.style.display = "block";
 
-box.style.display =
-"block";
+clearTimeout(window.toastTimer);
 
-clearTimeout(
-window.messageTimer
-);
+window.toastTimer =
+setTimeout(()=>{
+box.style.display = "none";
+},2400);
 
-window.messageTimer =
-setTimeout(
-function(){
+}
 
-box.style.display =
-"none";
 
-},
-2400
+/* -------------------------
+   DATE
+------------------------- */
+
+function todayKey(){
+
+const d = new Date();
+
+return d.getFullYear()
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+function dateObject(key){
+
+const p = key.split("-");
+
+return new Date(
+Number(p[0]),
+Number(p[1])-1,
+Number(p[2])
 );
 
 }
 
 
-/* =========================
+/* -------------------------
+   GREETING
+------------------------- */
+
+function updateGreeting(){
+
+const hour =
+new Date().getHours();
+
+let text = "Good morning 👋";
+
+if(hour >= 12 && hour < 18)
+text = "Good afternoon 👋";
+
+if(hour >= 18)
+text = "Good evening 👋";
+
+document.getElementById("greeting").textContent = text;
+
+document.getElementById("date").textContent =
+new Date().toLocaleDateString(
+undefined,
+{
+weekday:"long",
+month:"long",
+day:"numeric",
+year:"numeric"
+}
+);
+
+}
+
+
+/* -------------------------
    WELCOME
-========================= */
+------------------------- */
 
 function updateWelcome(){
 
-let box =
-document.getElementById(
-"welcomeBox"
-);
-
-if(
-welcomeHidden ||
-currentGoal !== ""
-){
-
-box.style.display =
-"none";
-
-}
-else{
-
-box.style.display =
+document.getElementById("welcome").style.display =
+welcomeHidden || goal
+?
+"none"
+:
 "block";
-
-}
 
 }
 
@@ -1744,231 +1700,37 @@ updateWelcome();
 }
 
 
-function startQuickGoal(goal){
+function quickGoal(value){
 
-document.getElementById(
-"goalInput"
-).value =
-goal;
+document.getElementById("goalInput").value = value;
 
-document.getElementById(
-"goalInput"
-).focus();
+document.getElementById("goalInput").focus();
 
-document.getElementById(
-"goalInput"
-).scrollIntoView({
+document.getElementById("goalInput").scrollIntoView({
 behavior:"smooth",
 block:"center"
 });
 
-showMessage(
-"🎯 Great choice! Now set your goal."
-);
+toast("🎯 Now save your goal.");
 
 }
 
 
-/* =========================
-   DATE
-========================= */
-
-function getTodayKey(){
-
-let now =
-new Date();
-
-return (
-now.getFullYear()
-+
-"-"
-+
-String(
-now.getMonth()+1
-).padStart(2,"0")
-+
-"-"
-+
-String(
-now.getDate()
-).padStart(2,"0")
-);
-
-}
-
-
-function dateFromKey(key){
-
-let parts =
-key.split("-");
-
-return new Date(
-parseInt(parts[0]),
-parseInt(parts[1])-1,
-parseInt(parts[2])
-);
-
-}
-
-
-function getDateText(){
-
-return new Date()
-.toLocaleDateString(
-undefined,
-{
-weekday:"long",
-year:"numeric",
-month:"long",
-day:"numeric"
-}
-);
-
-}
-
-
-/* =========================
-   GREETING
-========================= */
-
-function updateGreeting(){
-
-let hour =
-new Date().getHours();
-
-let greeting =
-"Good morning 👋";
-
-if(hour >= 12 && hour < 18){
-
-greeting =
-"Good afternoon 👋";
-
-}
-else if(hour >= 18){
-
-greeting =
-"Good evening 👋";
-
-}
-
-document.getElementById(
-"greeting"
-).textContent =
-greeting;
-
-document.getElementById(
-"dateText"
-).textContent =
-getDateText();
-
-}
-
-
-/* =========================
-   COACH MESSAGE
-========================= */
-
-function updateCoachMessage(){
-
-let message =
-document.getElementById(
-"coachMessage"
-);
-
-if(currentGoal === ""){
-
-message.textContent =
-"Set a goal and FocusFlow will help you plan your day.";
-
-return;
-
-}
-
-let remaining =
-tasks.filter(
-function(task){
-return !task.completed;
-}
-).length;
-
-let today =
-getTodayKey();
-
-let completedToday =
-dailyStats[today]
-?
-dailyStats[today].completed || 0
-:
-0;
-
-
-if(
-completedToday >= dailyTarget
-){
-
-message.textContent =
-"🏆 Daily target reached! You showed up today.";
-
-}
-else if(
-remaining === 0
-){
-
-message.textContent =
-"🎉 Everything is complete. Take a moment to celebrate your progress.";
-
-}
-else if(
-calculateStreak() >= 7
-){
-
-message.textContent =
-"🔥 One week strong! Protect the streak by taking one more focused step.";
-
-}
-else if(
-focusStats.sessions > 0
-){
-
-message.textContent =
-"🧠 You've already started. Keep the momentum going.";
-
-}
-else{
-
-message.textContent =
-"💪 Don't worry about everything at once. Focus on the next action.";
-
-}
-
-}
-
-
-/* =========================
+/* -------------------------
    GOAL
-========================= */
+------------------------- */
 
-function setGoal(){
+function saveGoal(){
 
-let input =
-document.getElementById(
-"goalInput"
-);
+const input =
+document.getElementById("goalInput");
 
-let goal =
+const value =
 input.value.trim();
 
-let category =
-document.getElementById(
-"goalCategory"
-).value;
+if(!value){
 
-if(goal === ""){
-
-showMessage(
-"⚠️ Enter a goal first."
-);
+toast("⚠️ Enter a goal first.");
 
 input.focus();
 
@@ -1976,299 +1738,422 @@ return;
 
 }
 
-currentGoal =
-goal;
+goal = value;
 
-currentGoalCategory =
-category;
+goalCategory =
+document.getElementById("goalCategory").value;
 
 welcomeHidden = true;
 
-localStorage.setItem(
-"focusflowWelcomeHidden",
-"true"
-);
+save();
 
-saveData();
+render();
 
-updateEverything();
-
-showMessage(
-"🎯 Goal saved!"
-);
+toast("🎯 Goal saved!");
 
 }
 
 
-/* =========================
-   GOAL DISPLAY
-========================= */
+function editGoal(){
 
-function showCurrentGoal(){
+document.getElementById("goalInput").value = goal;
 
-let box =
-document.getElementById(
-"currentGoal"
-);
+document.getElementById("goalCategory").value =
+goalCategory;
 
-let text =
-document.getElementById(
-"goalText"
-);
-
-if(currentGoal === ""){
-
-box.style.display =
-"none";
-
-return;
-
-}
-
-let icon =
-"📚";
-
-if(currentGoalCategory === "work")
-icon = "💼";
-
-if(currentGoalCategory === "life")
-icon = "🌱";
-
-if(currentGoalCategory === "money")
-icon = "💰";
-
-text.innerHTML =
-"<strong>Current Goal:</strong><br>"
-+
-icon
-+
-" "
-+
-currentGoal;
-
-box.style.display =
-"block";
+document.getElementById("goalInput").focus();
 
 }
 
 
-function changeGoal(){
-
-let input =
-document.getElementById(
-"goalInput"
-);
-
-let category =
-document.getElementById(
-"goalCategory"
-);
-
-input.value =
-currentGoal;
-
-category.value =
-currentGoalCategory;
-
-input.focus();
-
-input.select();
-
-input.scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-
-/* =========================
-   TASKS
-========================= */
+/* -------------------------
+   TASK ADD
+------------------------- */
 
 function addTask(){
 
-let input =
-document.getElementById(
-"taskInput"
-);
+const input =
+document.getElementById("taskInput");
 
-let text =
+const text =
 input.value.trim();
 
-if(text === ""){
+if(!text){
 
-showMessage(
-"⚠️ Enter an action first."
-);
+toast("⚠️ Enter an action first.");
 
 input.focus();
 
 return;
 
 }
-
-let priority =
-document.getElementById(
-"prioritySelect"
-).value;
-
-let time =
-parseInt(
-document.getElementById(
-"timeSelect"
-).value
-);
 
 tasks.push({
 
 text:text,
+
 completed:false,
-priority:priority,
-time:time,
+
 skipped:false,
+
+priority:
+document.getElementById("priority").value,
+
+time:
+parseInt(document.getElementById("time").value),
+
 createdAt:Date.now()
 
 });
 
-saveData();
-
 input.value = "";
 
-updateEverything();
+save();
 
-showMessage(
-"✅ Action added!"
-);
+render();
+
+toast("✅ Action added!");
 
 input.focus();
 
 }
 
 
-function displayTasks(){
+/* -------------------------
+   TASK DISPLAY
+------------------------- */
 
-let list =
-document.getElementById(
-"taskList"
-);
+function renderTasks(){
+
+const list =
+document.getElementById("taskList");
 
 list.innerHTML = "";
 
-tasks.forEach(
-function(task,index){
+tasks.forEach((task,index)=>{
 
-let li =
+const li =
 document.createElement("li");
 
-let priority =
+const priority =
 document.createElement("span");
 
-if(task.priority === "high")
-priority.textContent = "🔴";
-else if(task.priority === "medium")
-priority.textContent = "🟡";
-else
-priority.textContent = "🟢";
+priority.textContent =
+task.priority === "high"
+?
+"🔴"
+:
+task.priority === "low"
+?
+"🟢"
+:
+"🟡";
 
-
-let text =
+const text =
 document.createElement("span");
 
-text.textContent =
-task.text;
+text.textContent = task.text;
 
-text.className =
-"task-text";
+text.className = "task-text";
 
 if(task.completed)
 text.classList.add("completed");
 
+text.onclick = ()=>toggleTask(index);
 
-text.onclick =
-function(){
-
-if(!task.completed){
-
-task.completed = true;
-task.skipped = false;
-
-recordDailyCompletion();
-
-showMessage(
-"🎉 Action completed!"
-);
-
-}
-else{
-
-task.completed = false;
-
-}
-
-saveData();
-
-updateEverything();
-
-};
-
-
-let time =
+const time =
 document.createElement("span");
 
+time.className = "task-time";
+
 time.textContent =
-(task.time || 30)
-+
-" min";
+(task.time || 30)+" min";
 
-time.className =
-"task-time";
-
-
-let deleteButton =
+const del =
 document.createElement("button");
 
-deleteButton.textContent =
-"Delete";
+del.className = "delete-button";
 
-deleteButton.className =
-"delete-button";
+del.textContent = "Delete";
 
-deleteButton.onclick =
-function(){
+del.onclick = ()=>{
 
 tasks.splice(index,1);
 
-saveData();
+save();
+render();
 
-updateEverything();
-
-showMessage(
-"🗑️ Action removed."
-);
+toast("🗑️ Action removed.");
 
 };
-
 
 li.appendChild(priority);
 li.appendChild(text);
 li.appendChild(time);
-li.appendChild(deleteButton);
+li.appendChild(del);
 
 list.appendChild(li);
 
+});
+
+const total = tasks.length;
+
+const done = completedCount();
+
+const counter =
+document.getElementById("taskCounter");
+
+if(total === 0){
+
+counter.textContent =
+"📝 No actions yet. Add your first action.";
+
+}
+else{
+
+counter.textContent =
+done+" of "+total+" actions completed";
+
 }
 
+}
+
+
+/* -------------------------
+   TOGGLE TASK
+------------------------- */
+
+function toggleTask(index){
+
+const task = tasks[index];
+
+if(!task)
+return;
+
+task.completed = !task.completed;
+
+if(task.completed){
+
+task.skipped = false;
+
+recordCompletion();
+
+toast("🎉 Action completed!");
+
+}
+else{
+
+toast("↩️ Action reopened.");
+
+}
+
+save();
+render();
+
+}
+
+
+/* -------------------------
+   COMPLETION
+------------------------- */
+
+function completedCount(){
+
+return tasks.filter(
+task=>task.completed
+).length;
+
+}
+
+
+function recordCompletion(){
+
+const key = todayKey();
+
+if(!dailyStats[key]){
+
+dailyStats[key] = {
+completed:0,
+sessions:0,
+focusMinutes:0
+};
+
+}
+
+dailyStats[key].completed =
+(dailyStats[key].completed || 0)+1;
+
+checkAchievements();
+
+save();
+
+}
+
+
+/* -------------------------
+   FOCUS RECORD
+------------------------- */
+
+function recordFocus(minutes){
+
+const key = todayKey();
+
+if(!dailyStats[key]){
+
+dailyStats[key] = {
+completed:0,
+sessions:0,
+focusMinutes:0
+};
+
+}
+
+dailyStats[key].sessions =
+(dailyStats[key].sessions || 0)+1;
+
+dailyStats[key].focusMinutes =
+(dailyStats[key].focusMinutes || 0)+minutes;
+
+}
+
+
+/* -------------------------
+   ACTIVE DAY
+------------------------- */
+
+function activeDay(key){
+
+const data = dailyStats[key];
+
+if(!data)
+return false;
+
+return (
+(data.completed || 0) > 0 ||
+(data.sessions || 0) > 0 ||
+(data.focusMinutes || 0) > 0
 );
 
 }
 
 
-/* =========================
-   SMART SORT
-========================= */
+/* -------------------------
+   STREAK
+------------------------- */
 
-function priorityScore(task){
+function getStreak(){
+
+let streak = 0;
+
+const d = new Date();
+
+while(true){
+
+const key =
+d.getFullYear()
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
+
+if(activeDay(key)){
+
+streak++;
+
+d.setDate(d.getDate()-1);
+
+}
+else{
+
+break;
+
+}
+
+}
+
+return streak;
+
+}
+
+
+/* -------------------------
+   DASHBOARD
+------------------------- */
+
+function renderDashboard(){
+
+const key = todayKey();
+
+const data =
+dailyStats[key] || {
+completed:0,
+sessions:0,
+focusMinutes:0
+};
+
+const done =
+data.completed || 0;
+
+const streak =
+getStreak();
+
+document.getElementById("dashDone").textContent =
+done;
+
+document.getElementById("dashTarget").textContent =
+done+"/"+dailyTarget;
+
+document.getElementById("dashStreak").textContent =
+streak+"🔥";
+
+document.getElementById("dashMinutes").textContent =
+data.focusMinutes || 0;
+
+let message =
+"🎯 Choose one important action and begin.";
+
+if(!goal){
+
+message =
+"👋 Set your goal first. Then FocusFlow can plan your day.";
+
+}
+else if(done >= dailyTarget){
+
+message =
+"🏆 Daily target reached. You showed up today!";
+
+}
+else if(streak >= 7){
+
+message =
+"🔥 You're on a "+streak+"-day streak. Protect the momentum.";
+
+}
+else if(done > 0){
+
+message =
+"💪 Good start. One more focused action keeps the momentum moving.";
+
+}
+else{
+
+message =
+"⚡ Your best move is simple: start Today's Focus.";
+
+}
+
+document.getElementById("dayMessage").textContent =
+message;
+
+}
+
+
+/* -------------------------
+   SMART RECOMMENDATION
+------------------------- */
+
+function scoreTask(task){
 
 let score = 0;
 
@@ -2281,23 +2166,19 @@ score += 50;
 if(task.priority === "low")
 score += 10;
 
-let time =
+const time =
 parseInt(task.time || 30);
 
-score +=
-Math.max(0,60-time);
+score += Math.max(0,60-time);
 
 if(task.createdAt){
 
-let age =
+const age =
 Date.now()-task.createdAt;
 
-score +=
-Math.min(
+score += Math.min(
 20,
-Math.floor(
-age/86400000
-)
+Math.floor(age/86400000)
 );
 
 }
@@ -2307,204 +2188,826 @@ return score;
 }
 
 
-function sortedUnfinished(){
+function recommendedTask(){
 
 return tasks
-.filter(
-function(task){
-
-return !task.completed &&
-!task.skipped;
-
-}
+.filter(task =>
+!task.completed &&
+!task.skipped
 )
-.sort(
-function(a,b){
-
-return priorityScore(b)
--
-priorityScore(a);
-
-}
-);
+.sort((a,b)=>
+scoreTask(b)-scoreTask(a)
+)[0] || null;
 
 }
 
 
-/* =========================
-   SMART COACH
-========================= */
+function renderCoach(){
 
-function calculateRecommendation(){
+const title =
+document.getElementById("todayFocusTitle");
 
-let unfinished =
-sortedUnfinished();
+const meta =
+document.getElementById("todayFocusMeta");
 
-if(unfinished.length === 0)
-return null;
+const task =
+recommendedTask();
 
-return unfinished[0];
-
-}
-
-
-function updateSmartCoach(){
-
-let status =
-document.getElementById(
-"coachStatus"
-);
-
-let title =
-document.getElementById(
-"recommendationTitle"
-);
-
-let meta =
-document.getElementById(
-"recommendationMeta"
-);
-
-let recommendation =
-calculateRecommendation();
-
-if(currentGoal === ""){
-
-status.textContent =
-"🎯 Set a goal to activate your Focus Coach.";
+if(!goal){
 
 title.textContent =
-"Your next best step will appear here.";
+"Set a goal to activate Today's Focus.";
 
 meta.textContent =
-"FocusFlow needs a goal before it can coach you.";
+"Your next best action will appear here.";
 
 return;
 
 }
 
-if(!recommendation){
-
-status.textContent =
-"🏆 You're caught up.";
+if(!task){
 
 title.textContent =
-"No unfinished action right now.";
+"🎉 You're caught up!";
 
 meta.textContent =
-"Add another action or use Suggest Steps to continue.";
+"Add another action or generate suggested steps.";
 
 return;
 
 }
 
-status.textContent =
-"🧠 Based on your priorities and estimated time:";
-
-title.textContent =
-recommendation.text;
+title.textContent = task.text;
 
 meta.textContent =
 "Priority: "
 +
-capitalize(recommendation.priority)
+(task.priority || "medium")
 +
 " • "
 +
-(recommendation.time || 30)
+(task.time || 30)
 +
 " minutes";
 
 }
 
 
-function refreshRecommendation(){
+function refreshCoach(){
 
-updateSmartCoach();
+renderCoach();
 
-showMessage(
-"🧠 Recommendation updated."
-);
+toast("🧠 Focus recommendation refreshed.");
 
 }
 
 
-function startRecommendedSession(){
+function startRecommended(){
 
-let recommendation =
-calculateRecommendation();
+const task =
+recommendedTask();
 
-if(!recommendation){
+if(!task){
 
-showMessage(
-currentGoal === ""
+toast(
+goal
 ?
-"⚠️ Set a goal first."
-:
 "🎉 No unfinished actions."
+:
+"⚠️ Set a goal first."
 );
 
 return;
 
 }
 
-activeSessionTaskIndex =
-tasks.indexOf(
-recommendation
+activeIndex =
+tasks.indexOf(task);
+
+openFocus(task);
+
+}
+
+
+/* -------------------------
+   START MY DAY
+------------------------- */
+
+function startMyDay(){
+
+if(!goal){
+
+document.getElementById("goalInput").focus();
+
+document.getElementById("goalInput").scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+toast("🎯 Set your goal first.");
+
+return;
+
+}
+
+const task =
+recommendedTask();
+
+if(!task){
+
+toast(
+"🎉 Your actions are complete. Add your next action."
 );
 
-startFocusSession(
-recommendation
+document.getElementById("taskInput").focus();
+
+return;
+
+}
+
+toast("⚡ Today's Focus is ready.");
+
+setTimeout(
+()=>startRecommended(),
+300
 );
 
 }
 
 
-/* =========================
-   FOCUS SESSION
-========================= */
+/* -------------------------
+   PLAN
+------------------------- */
 
-function startFocusSession(task){
+function renderPlan(){
+
+const list =
+document.getElementById("planList");
+
+list.innerHTML = "";
+
+const plan =
+tasks
+.filter(t=>!t.completed && !t.skipped)
+.sort((a,b)=>scoreTask(b)-scoreTask(a))
+.slice(0,3);
+
+if(plan.length === 0){
+
+const empty =
+document.createElement("li");
+
+empty.className = "plan-item";
+
+empty.textContent =
+goal
+?
+"🎉 No unfinished actions. Add your next step."
+:
+"🎯 Set a goal and add actions to build your plan.";
+
+list.appendChild(empty);
+
+return;
+
+}
+
+plan.forEach((task,index)=>{
+
+const item =
+document.createElement("li");
+
+item.className = "plan-item";
+
+const number =
+document.createElement("div");
+
+number.className = "plan-number";
+
+number.textContent = index+1;
+
+const content =
+document.createElement("div");
+
+content.className = "plan-content";
+
+const title =
+document.createElement("div");
+
+title.className = "plan-title";
+
+title.textContent = task.text;
+
+const time =
+document.createElement("span");
+
+time.className = "plan-time";
+
+time.textContent =
+"⏱️ "+(task.time||30)+" minutes";
+
+content.appendChild(title);
+content.appendChild(time);
+
+const done =
+document.createElement("button");
+
+done.className = "plan-done";
+
+done.textContent = "Done";
+
+done.onclick = ()=>{
+
+const i = tasks.indexOf(task);
+
+if(i >= 0){
+
+tasks[i].completed = true;
+tasks[i].skipped = false;
+
+recordCompletion();
+
+save();
+render();
+
+toast("🎉 Nice work!");
+
+}
+
+};
+
+item.appendChild(number);
+item.appendChild(content);
+item.appendChild(done);
+
+list.appendChild(item);
+
+});
+
+}
+
+
+/* -------------------------
+   PROGRESS
+------------------------- */
+
+function renderProgress(){
+
+const total =
+tasks.length;
+
+const done =
+completedCount();
+
+const percent =
+total
+?
+Math.round(done/total*100)
+:
+0;
+
+document.getElementById("progressFill").style.width =
+percent+"%";
+
+document.getElementById("progressText").textContent =
+percent+"% complete";
+
+let summary;
+
+if(!goal){
+
+summary =
+"Set a goal and add your first action.";
+
+}
+else if(!total){
+
+summary =
+"🎯 "+goal+" — add your first action.";
+
+}
+else if(done === total){
+
+summary =
+"🏆 All current actions are complete!";
+
+}
+else{
+
+summary =
+"🎯 "+goal+" — "+(total-done)+" actions remaining.";
+
+}
+
+document.getElementById("progressSummary").textContent =
+summary;
+
+}
+
+
+/* -------------------------
+   TARGET
+------------------------- */
+
+function changeTarget(){
+
+dailyTarget =
+parseInt(
+document.getElementById("dailyTarget").value
+);
+
+save();
+
+render();
+
+toast("🎯 Daily target updated.");
+
+}
+
+
+function renderTarget(){
+
+document.getElementById("dailyTarget").value =
+String(dailyTarget);
+
+const key = todayKey();
+
+const done =
+dailyStats[key]
+?
+dailyStats[key].completed || 0
+:
+0;
+
+document.getElementById("targetStatus").textContent =
+done >= dailyTarget
+?
+"🏆 "+done+"/"+dailyTarget+" — target reached!"
+:
+done+"/"+dailyTarget+" actions completed today";
+
+}
+
+
+/* -------------------------
+   WEEK
+------------------------- */
+
+function renderWeek(){
+
+const grid =
+document.getElementById("weekGrid");
+
+grid.innerHTML = "";
+
+const today =
+new Date();
+
+for(let i=6;i>=0;i--){
+
+const d = new Date(today);
+
+d.setDate(today.getDate()-i);
+
+const key =
+d.getFullYear()
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
+
+const data =
+dailyStats[key] || {};
+
+const day =
+document.createElement("div");
+
+day.className =
+"day";
+
+if(i === 0)
+day.classList.add("today");
+
+const name =
+document.createElement("div");
+
+name.className = "day-name";
+
+name.textContent =
+d.toLocaleDateString(
+undefined,
+{weekday:"short"}
+);
+
+const icon =
+document.createElement("div");
+
+icon.className = "day-icon";
+
+icon.textContent =
+activeDay(key)
+?
+"🔥"
+:
+"·";
+
+const count =
+document.createElement("div");
+
+count.className = "day-count";
+
+count.textContent =
+(data.completed || 0)+" done";
+
+day.appendChild(name);
+day.appendChild(icon);
+day.appendChild(count);
+
+grid.appendChild(day);
+
+}
+
+}
+
+
+/* -------------------------
+   STREAK
+------------------------- */
+
+function renderStreak(){
+
+const streak =
+getStreak();
+
+document.getElementById("streakNumber").textContent =
+streak;
+
+let title;
+let text;
+
+if(streak === 0){
+
+title = "Start your streak today.";
+
+text =
+"Complete an action or focus session to begin.";
+
+}
+else if(streak === 1){
+
+title = "🔥 Day 1 is alive!";
+
+text =
+"Come back tomorrow to make it 2.";
+
+}
+else if(streak < 7){
+
+title =
+"🔥 "+streak+" days strong!";
+
+text =
+"Keep showing up. You're building consistency.";
+
+}
+else{
+
+title =
+"🏆 "+streak+" days strong!";
+
+text =
+"Your consistency is becoming a habit.";
+
+}
+
+document.getElementById("streakTitle").textContent =
+title;
+
+document.getElementById("streakText").textContent =
+text;
+
+}
+
+
+/* -------------------------
+   ACHIEVEMENTS
+------------------------- */
+
+function completedTotal(){
+
+return tasks.filter(t=>t.completed).length;
+
+}
+
+
+function definitions(){
+
+return [
+
+{
+id:"first",
+icon:"🌱",
+title:"First Step",
+description:"Complete your first action.",
+unlocked:completedTotal()>=1
+},
+
+{
+id:"five",
+icon:"⭐",
+title:"Getting Started",
+description:"Complete 5 actions.",
+unlocked:completedTotal()>=5
+},
+
+{
+id:"ten",
+icon:"🚀",
+title:"Momentum",
+description:"Complete 10 actions.",
+unlocked:completedTotal()>=10
+},
+
+{
+id:"three",
+icon:"🔥",
+title:"3-Day Streak",
+description:"Stay active for 3 days.",
+unlocked:getStreak()>=3
+},
+
+{
+id:"seven",
+icon:"🏆",
+title:"7-Day Streak",
+description:"Stay active for 7 days.",
+unlocked:getStreak()>=7
+},
+
+{
+id:"session",
+icon:"🧘",
+title:"First Focus",
+description:"Complete your first focus session.",
+unlocked:totalSessions>=1
+},
+
+{
+id:"deep",
+icon:"⏱️",
+title:"Deep Work",
+description:"Reach 60 focus minutes.",
+unlocked:totalFocusMinutes>=60
+},
+
+{
+id:"builder",
+icon:"💪",
+title:"Focus Builder",
+description:"Complete 5 focus sessions.",
+unlocked:totalSessions>=5
+}
+
+];
+
+}
+
+
+function checkAchievements(){
+
+definitions().forEach(item=>{
+
+if(item.unlocked && !achievements[item.id]){
+
+achievements[item.id] = true;
+
+toast("🏆 Achievement unlocked: "+item.title);
+
+}
+
+});
+
+save();
+
+}
+
+
+function renderAchievements(){
+
+const grid =
+document.getElementById("achievementGrid");
+
+grid.innerHTML = "";
+
+definitions().forEach(item=>{
+
+const box =
+document.createElement("div");
+
+box.className =
+"achievement"
++
+(item.unlocked ? " unlocked" : "");
+
+box.innerHTML =
+`
+<div class="achievement-icon">
+${item.unlocked ? item.icon : "🔒"}
+</div>
+<div class="achievement-title">
+${item.title}
+</div>
+<div class="achievement-description">
+${item.description}
+</div>
+`;
+
+grid.appendChild(box);
+
+});
+
+}
+
+
+/* -------------------------
+   STATS
+------------------------- */
+
+function renderStats(){
+
+document.getElementById("sessions").textContent =
+focusStats.sessions;
+
+document.getElementById("minutes").textContent =
+focusStats.minutes;
+
+document.getElementById("completedTotal").textContent =
+completedTotal();
+
+}
+
+
+/* -------------------------
+   SUGGESTIONS
+------------------------- */
+
+function suggestSteps(){
+
+if(!goal){
+
+toast("⚠️ Set a goal first.");
+
+document.getElementById("goalInput").focus();
+
+return;
+
+}
+
+const general = [
+
+{
+text:"Define exactly what success looks like",
+time:15
+},
+
+{
+text:"Break the goal into a smaller first step",
+time:20
+},
+
+{
+text:"Complete the most important action",
+time:30
+},
+
+{
+text:"Review what worked",
+time:15
+},
+
+{
+text:"Choose the next action",
+time:15
+}
+
+];
+
+suggestions = general;
+
+const box =
+document.getElementById("suggestionList");
+
+box.innerHTML = "";
+
+suggestions.forEach((item,index)=>{
+
+const row =
+document.createElement("div");
+
+row.className = "suggestion";
+
+row.innerHTML =
+`
+<label>
+<input type="checkbox"
+id="suggest${index}"
+checked>
+${item.text} — ${item.time} min
+</label>
+`;
+
+box.appendChild(row);
+
+});
+
+document.getElementById("suggestions").style.display =
+"block";
+
+}
+
+
+function addSuggestions(){
+
+let added = 0;
+
+suggestions.forEach((item,index)=>{
+
+const check =
+document.getElementById("suggest"+index);
+
+if(check && check.checked){
+
+tasks.push({
+
+text:item.text,
+
+completed:false,
+
+skipped:false,
+
+priority:"medium",
+
+time:item.time,
+
+createdAt:Date.now()
+
+});
+
+added++;
+
+}
+
+});
+
+save();
+
+closeSuggestions();
+
+render();
+
+toast("✅ "+added+" actions added!");
+
+}
+
+
+function closeSuggestions(){
+
+document.getElementById("suggestions").style.display =
+"none";
+
+}
+
+
+/* -------------------------
+   FOCUS SESSION
+------------------------- */
+
+function openFocus(task){
 
 if(!task)
 return;
 
-activeSessionMinutes =
+sessionMinutes =
 parseInt(task.time || 30);
 
 remainingSeconds =
-activeSessionMinutes*60;
+sessionMinutes*60;
 
 sessionRunning = false;
 
-document.getElementById(
-"focusTask"
-).textContent =
+document.getElementById("focusTask").textContent =
 task.text;
 
-document.getElementById(
-"timerStatus"
-).textContent =
+document.getElementById("timerStatus").textContent =
 "Ready when you are.";
 
-document.getElementById(
-"startTimerButton"
-).textContent =
+document.getElementById("timerButton").textContent =
 "▶️ Start";
 
-updateTimerDisplay();
+updateTimer();
 
-document.getElementById(
-"focusSession"
-).style.display =
+document.getElementById("focusSession").style.display =
 "block";
-
-document.getElementById(
-"focusSession"
-).scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
 
 }
 
@@ -2521,30 +3024,25 @@ startTimer();
 
 function startTimer(){
 
-if(remainingSeconds<=0)
+if(remainingSeconds <= 0)
 return;
 
 sessionRunning = true;
 
-document.getElementById(
-"startTimerButton"
-).textContent =
+document.getElementById("timerButton").textContent =
 "⏸️ Pause";
 
-document.getElementById(
-"timerStatus"
-).textContent =
+document.getElementById("timerStatus").textContent =
 "🔥 Focus mode is active.";
 
 timerInterval =
-setInterval(
-function(){
+setInterval(()=>{
 
 remainingSeconds--;
 
-updateTimerDisplay();
+updateTimer();
 
-if(remainingSeconds<=0){
+if(remainingSeconds <= 0){
 
 clearInterval(timerInterval);
 
@@ -2552,23 +3050,14 @@ timerInterval = null;
 
 sessionRunning = false;
 
-document.getElementById(
-"startTimerButton"
-).textContent =
-"▶️ Start";
-
-document.getElementById(
-"timerStatus"
-).textContent =
+document.getElementById("timerStatus").textContent =
 "🎉 Time's up!";
 
-finishSession(true);
+finishSession();
 
 }
 
-},
-1000
-);
+},1000);
 
 }
 
@@ -2581,50 +3070,38 @@ clearInterval(timerInterval);
 
 timerInterval = null;
 
-document.getElementById(
-"startTimerButton"
-).textContent =
+document.getElementById("timerButton").textContent =
 "▶️ Resume";
 
-document.getElementById(
-"timerStatus"
-).textContent =
+document.getElementById("timerStatus").textContent =
 "⏸️ Session paused.";
 
 }
 
 
-function updateTimerDisplay(){
+function updateTimer(){
 
-let minutes =
-Math.floor(
-remainingSeconds/60
-);
+const min =
+Math.floor(remainingSeconds/60);
 
-let seconds =
+const sec =
 remainingSeconds%60;
 
-document.getElementById(
-"timer"
-).textContent =
-String(minutes).padStart(2,"0")
+document.getElementById("timer").textContent =
+String(min).padStart(2,"0")
 +
 ":"
 +
-String(seconds).padStart(2,"0");
+String(sec).padStart(2,"0");
 
 }
 
 
-/* =========================
-   SESSION FINISH
-========================= */
+function finishSession(){
 
-function finishSession(timeExpired=false){
+if(activeIndex === null){
 
-if(activeSessionTaskIndex===null){
-
-exitFocusMode();
+exitFocus();
 
 return;
 
@@ -2636,103 +3113,63 @@ timerInterval = null;
 
 sessionRunning = false;
 
-let elapsed =
-(activeSessionMinutes*60)
--
-remainingSeconds;
+const elapsed =
+sessionMinutes*60-remainingSeconds;
 
-let minutesSpent =
-timeExpired
-?
-activeSessionMinutes
-:
+const spent =
 Math.max(
 1,
 Math.round(elapsed/60)
 );
 
-
-/*
-Only count a session when user
-actually spent time or explicitly
-finished it.
-*/
-
 focusStats.sessions++;
 
-focusStats.minutes +=
-minutesSpent;
+focusStats.minutes += spent;
 
 totalSessions++;
 
-totalFocusMinutes +=
-minutesSpent;
+totalFocusMinutes += spent;
 
-saveData();
+recordFocus(spent);
 
-document.getElementById(
-"focusSession"
-).style.display =
+save();
+
+document.getElementById("focusSession").style.display =
 "none";
 
-document.getElementById(
-"reflectionBox"
-).style.display =
+document.getElementById("reflection").style.display =
 "block";
 
-document.getElementById(
-"reflectionBox"
-).scrollIntoView({
-behavior:"smooth",
-block:"center"
+document.getElementById("reflection").scrollIntoView({
+behavior:"smooth"
 });
 
 }
 
 
-/* =========================
-   REFLECTION
-========================= */
+function reflect(result){
 
-function completeReflection(result){
+const task =
+tasks[activeIndex];
 
-if(activeSessionTaskIndex===null){
+if(task){
 
-hideReflection();
-return;
-
-}
-
-let task =
-tasks[activeSessionTaskIndex];
-
-if(!task){
-
-hideReflection();
-return;
-
-}
-
-if(result==="complete"){
+if(result === "complete"){
 
 task.completed = true;
 task.skipped = false;
 
-recordDailyCompletion();
+recordCompletion();
 
-showMessage(
-"🏆 Excellent! Action completed."
-);
+toast("🏆 Focus session completed!");
 
 }
-else if(result==="partial"){
+else if(result === "partial"){
 
 task.completed = false;
 task.skipped = false;
 
-showMessage(
-"💪 Good work. Keep the momentum."
-);
+toast("💪 Partial progress still counts.");
 
 }
 else{
@@ -2740,34 +3177,25 @@ else{
 task.completed = false;
 task.skipped = true;
 
-showMessage(
-"⏭️ That's okay. We'll choose another step."
-);
+toast("⏭️ We'll pick another action.");
 
 }
 
-saveData();
-
-hideReflection();
-
-activeSessionTaskIndex = null;
-
-updateEverything();
-
 }
 
+activeIndex = null;
 
-function hideReflection(){
-
-document.getElementById(
-"reflectionBox"
-).style.display =
+document.getElementById("reflection").style.display =
 "none";
 
+save();
+
+render();
+
 }
 
 
-function exitFocusMode(){
+function exitFocus(){
 
 clearInterval(timerInterval);
 
@@ -2775,1161 +3203,39 @@ timerInterval = null;
 
 sessionRunning = false;
 
-document.getElementById(
-"focusSession"
-).style.display =
+activeIndex = null;
+
+document.getElementById("focusSession").style.display =
 "none";
 
-document.getElementById(
-"reflectionBox"
-).style.display =
-"none";
-
-activeSessionTaskIndex = null;
-
-showMessage(
-"Focus session closed."
-);
-
-}
-
-
-/* =========================
-   DAILY PLAN
-========================= */
-
-function updateDailyPlan(){
-
-let list =
-document.getElementById(
-"dailyPlanList"
-);
-
-list.innerHTML = "";
-
-let plan =
-sortedUnfinished().slice(0,3);
-
-if(plan.length===0){
-
-let empty =
-document.createElement("li");
-
-empty.className =
-"no-plan";
-
-empty.textContent =
-tasks.length===0
-?
-"🎯 Add your first action to create today's plan."
-:
-"🎉 Your current actions are complete. Enjoy the win!";
-
-list.appendChild(empty);
-
-return;
-
-}
-
-plan.forEach(
-function(task,index){
-
-let item =
-document.createElement("li");
-
-item.className =
-"plan-item";
-
-let number =
-document.createElement("div");
-
-number.className =
-"plan-number";
-
-number.textContent =
-index+1;
-
-let content =
-document.createElement("div");
-
-content.className =
-"plan-content";
-
-let title =
-document.createElement("span");
-
-title.className =
-"plan-title";
-
-title.textContent =
-task.text;
-
-let time =
-document.createElement("span");
-
-time.className =
-"plan-time";
-
-time.textContent =
-"⏱️ "
-+
-(task.time||30)
-+
-" minutes";
-
-content.appendChild(title);
-content.appendChild(time);
-
-let done =
-document.createElement("button");
-
-done.className =
-"plan-button";
-
-done.textContent =
-"Done";
-
-done.onclick =
-function(){
-
-let i =
-tasks.indexOf(task);
-
-if(i!==-1){
-
-tasks[i].completed = true;
-tasks[i].skipped = false;
-
-recordDailyCompletion();
-
-saveData();
-
-updateEverything();
-
-showMessage(
-"🎉 Nice work!"
-);
-
-}
-
-};
-
-item.appendChild(number);
-item.appendChild(content);
-item.appendChild(done);
-
-list.appendChild(item);
-
-}
-
-);
-
-}
-
-
-/* =========================
-   SUGGEST STEPS
-========================= */
-
-function breakGoal(){
-
-if(currentGoal===""){
-
-showMessage(
-"⚠️ Set a goal first."
-);
-
-document.getElementById(
-"goalInput"
-).focus();
-
-return;
-
-}
-
-let goal =
-currentGoal.toLowerCase();
-
-suggestedSteps = [];
-
-
-if(
-currentGoalCategory==="learning" ||
-goal.includes("learn") ||
-goal.includes("study") ||
-goal.includes("coding") ||
-goal.includes("programming")
-){
-
-suggestedSteps=[
-
-{
-text:"Choose exactly what you want to learn",
-time:15
-},
-
-{
-text:"Learn the basic concepts",
-time:30
-},
-
-{
-text:"Practice what you learned",
-time:30
-},
-
-{
-text:"Build a small project",
-time:60
-},
-
-{
-text:"Review your progress",
-time:15
-}
-
-];
-
-}
-else if(
-currentGoalCategory==="money" ||
-goal.includes("money") ||
-goal.includes("earn")
-){
-
-suggestedSteps=[
-
-{
-text:"Choose a skill or service you can offer",
-time:30
-},
-
-{
-text:"Identify people who might need it",
-time:30
-},
-
-{
-text:"Create a simple offer",
-time:45
-},
-
-{
-text:"Contact your first potential customer",
-time:30
-},
-
-{
-text:"Improve your offer from feedback",
-time:30
-}
-
-];
-
-}
-else if(
-currentGoalCategory==="work" ||
-goal.includes("business") ||
-goal.includes("startup") ||
-goal.includes("client")
-){
-
-suggestedSteps=[
-
-{
-text:"Define the problem you want to solve",
-time:30
-},
-
-{
-text:"Identify your target customer",
-time:30
-},
-
-{
-text:"Research similar solutions",
-time:30
-},
-
-{
-text:"Create a simple first version",
-time:60
-},
-
-{
-text:"Get feedback from potential users",
-time:30
-}
-
-];
-
-}
-else{
-
-suggestedSteps=[
-
-{
-text:"Define exactly what you want to accomplish",
-time:15
-},
-
-{
-text:"Break the goal into smaller actions",
-time:20
-},
-
-{
-text:"Choose the easiest first step",
-time:15
-},
-
-{
-text:"Complete the main action",
-time:30
-},
-
-{
-text:"Review your progress",
-time:15
-}
-
-];
-
-}
-
-showSuggestions();
-
-}
-
-
-function showSuggestions(){
-
-let list =
-document.getElementById(
-"suggestionsList"
-);
-
-list.innerHTML = "";
-
-suggestedSteps.forEach(
-function(step,index){
-
-let item =
-document.createElement("div");
-
-item.className =
-"suggestion-item";
-
-let checkbox =
-document.createElement("input");
-
-checkbox.type =
-"checkbox";
-
-checkbox.checked = true;
-
-checkbox.id =
-"suggestion"+index;
-
-let label =
-document.createElement("label");
-
-label.htmlFor =
-"suggestion"+index;
-
-label.textContent =
-step.text
-+
-" — "
-+
-step.time
-+
-" min";
-
-item.appendChild(checkbox);
-item.appendChild(label);
-
-list.appendChild(item);
-
-});
-
-document.getElementById(
-"suggestionsBox"
-).style.display =
-"block";
-
-document.getElementById(
-"suggestionsBox"
-).scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-
-function addSelectedSteps(){
-
-let added = 0;
-
-suggestedSteps.forEach(
-function(step,index){
-
-let checkbox =
-document.getElementById(
-"suggestion"+index
-);
-
-if(
-checkbox &&
-checkbox.checked
-){
-
-tasks.push({
-
-text:step.text,
-completed:false,
-priority:"medium",
-time:step.time,
-skipped:false,
-createdAt:Date.now()
-
-});
-
-added++;
-
-}
-
-});
-
-saveData();
-
-closeSuggestions();
-
-updateEverything();
-
-showMessage(
-"✅ "
-+
-added
-+
-" actions added!"
-);
-
-}
-
-
-function closeSuggestions(){
-
-document.getElementById(
-"suggestionsBox"
-).style.display =
+document.getElementById("reflection").style.display =
 "none";
 
 }
 
 
-/* =========================
-   COMPLETION
-========================= */
-
-function recordDailyCompletion(){
-
-let today =
-getTodayKey();
-
-if(!dailyStats[today]){
-
-dailyStats[today]={
-completed:0,
-focusMinutes:0,
-sessions:0
-};
-
-}
-
-if(
-typeof dailyStats[today].completed
-!=="number"
-){
-
-dailyStats[today].completed=0;
-
-}
-
-dailyStats[today].completed++;
-
-checkAchievements();
-
-saveData();
-
-}
-
-
-/* =========================
-   FOCUS DAILY RECORD
-========================= */
-
-function recordDailyFocus(minutes){
-
-let today =
-getTodayKey();
-
-if(!dailyStats[today]){
-
-dailyStats[today]={
-completed:0,
-focusMinutes:0,
-sessions:0
-};
-
-}
-
-if(
-typeof dailyStats[today].focusMinutes
-!=="number"
-){
-
-dailyStats[today].focusMinutes=0;
-
-}
-
-if(
-typeof dailyStats[today].sessions
-!=="number"
-){
-
-dailyStats[today].sessions=0;
-
-}
-
-dailyStats[today].focusMinutes +=
-minutes;
-
-dailyStats[today].sessions++;
-
-}
-
-
-/* =========================
-   STREAK
-========================= */
-
-function hasActivity(key){
-
-if(
-dailyStats[key] &&
-(
-(dailyStats[key].completed||0)>0 ||
-(dailyStats[key].sessions||0)>0 ||
-(dailyStats[key].focusMinutes||0)>0
-)
-){
-
-return true;
-
-}
-
-return false;
-
-}
-
-
-function calculateStreak(){
-
-let streak = 0;
-
-let date =
-new Date();
-
-while(true){
-
-let key =
-date.getFullYear()
-+
-"-"
-+
-String(date.getMonth()+1).padStart(2,"0")
-+
-"-"
-+
-String(date.getDate()).padStart(2,"0");
-
-if(hasActivity(key)){
-
-streak++;
-
-date.setDate(
-date.getDate()-1
-);
-
-}
-else{
-
-break;
-
-}
-
-}
-
-return streak;
-
-}
-
-
-/* =========================
-   WEEK
-========================= */
-
-function updateWeek(){
-
-let grid =
-document.getElementById(
-"weekGrid"
-);
-
-grid.innerHTML = "";
-
-let today =
-new Date();
-
-for(let i=6;i>=0;i--){
-
-let date =
-new Date(today);
-
-date.setDate(
-today.getDate()-i
-);
-
-let key =
-date.getFullYear()
-+
-"-"
-+
-String(date.getMonth()+1).padStart(2,"0")
-+
-"-"
-+
-String(date.getDate()).padStart(2,"0");
-
-let data =
-dailyStats[key] || {};
-
-let activity =
-hasActivity(key);
-
-let day =
-document.createElement("div");
-
-day.className =
-"day";
-
-let name =
-document.createElement("div");
-
-name.className =
-"day-name";
-
-name.textContent =
-date.toLocaleDateString(
-undefined,
-{weekday:"short"}
-);
-
-let icon =
-document.createElement("div");
-
-icon.className =
-"day-icon";
-
-icon.textContent =
-activity
-?
-"🔥"
-:
-"·";
-
-let count =
-document.createElement("div");
-
-count.className =
-"day-count";
-
-count.textContent =
-(data.completed||0)
-+
-" done";
-
-day.appendChild(name);
-day.appendChild(icon);
-day.appendChild(count);
-
-grid.appendChild(day);
-
-}
-
-}
-
-
-/* =========================
-   TARGET
-========================= */
-
-function setDailyTarget(){
-
-dailyTarget =
-parseInt(
-document.getElementById(
-"dailyTargetSelect"
-).value
-);
-
-saveData();
-
-updateTarget();
-
-updateCoachMessage();
-
-showMessage(
-"🎯 Daily target updated."
-);
-
-}
-
-
-function updateTarget(){
-
-let select =
-document.getElementById(
-"dailyTargetSelect"
-);
-
-select.value =
-String(dailyTarget);
-
-let today =
-getTodayKey();
-
-let completed =
-dailyStats[today]
-?
-dailyStats[today].completed || 0
-:
-0;
-
-let status =
-document.getElementById(
-"targetStatus"
-);
-
-if(completed>=dailyTarget){
-
-status.textContent =
-"🏆 "
-+
-completed
-+
-" / "
-+
-dailyTarget
-+
-" actions completed — target reached!";
-
-}
-else{
-
-status.textContent =
-completed
-+
-" / "
-+
-dailyTarget
-+
-" actions completed today";
-
-}
-
-}
-
-
-/* =========================
-   ACHIEVEMENTS
-========================= */
-
-function getAchievementDefinitions(){
-
-return [
-
-{
-id:"first_action",
-icon:"🌱",
-title:"First Step",
-description:"Complete your first action.",
-unlocked:
-tasks.some(
-function(task){
-return task.completed;
-}
-)
-},
-
-{
-id:"five_actions",
-icon:"⭐",
-title:"Getting Started",
-description:"Complete 5 actions.",
-unlocked:
-getCompletedTotal()>=5
-},
-
-{
-id:"ten_actions",
-icon:"🚀",
-title:"Momentum",
-description:"Complete 10 actions.",
-unlocked:
-getCompletedTotal()>=10
-},
-
-{
-id:"three_day_streak",
-icon:"🔥",
-title:"3-Day Streak",
-description:"Stay active for 3 days.",
-unlocked:
-calculateStreak()>=3
-},
-
-{
-id:"seven_day_streak",
-icon:"🏆",
-title:"7-Day Streak",
-description:"Stay active for 7 days.",
-unlocked:
-calculateStreak()>=7
-},
-
-{
-id:"first_session",
-icon:"🧘",
-title:"First Focus",
-description:"Complete your first focus session.",
-unlocked:
-totalSessions>=1
-},
-
-{
-id:"sixty_minutes",
-icon:"⏱️",
-title:"Deep Work",
-description:"Accumulate 60 focus minutes.",
-unlocked:
-totalFocusMinutes>=60
-},
-
-{
-id:"five_sessions",
-icon:"💪",
-title:"Focus Builder",
-description:"Complete 5 focus sessions.",
-unlocked:
-totalSessions>=5
-}
-
-];
-
-}
-
-
-function getCompletedTotal(){
-
-return tasks.filter(
-function(task){
-return task.completed;
-}
-).length;
-
-}
-
-
-function checkAchievements(){
-
-let definitions =
-getAchievementDefinitions();
-
-definitions.forEach(
-function(item){
-
-if(
-item.unlocked &&
-!achievementState[item.id]
-){
-
-achievementState[item.id] =
-true;
-
-showMessage(
-"🏆 Achievement unlocked: "
-+
-item.title
-);
-
-}
-
-});
-
-saveData();
-
-}
-
-
-function updateAchievements(){
-
-let grid =
-document.getElementById(
-"achievementGrid"
-);
-
-grid.innerHTML = "";
-
-let definitions =
-getAchievementDefinitions();
-
-definitions.forEach(
-function(item){
-
-let unlocked =
-!!item.unlocked;
-
-let card =
-document.createElement("div");
-
-card.className =
-"achievement"
-+
-(unlocked ? " unlocked" : "");
-
-let icon =
-document.createElement("div");
-
-icon.className =
-"achievement-icon";
-
-icon.textContent =
-unlocked
-?
-item.icon
-:
-"🔒";
-
-let title =
-document.createElement("div");
-
-title.className =
-"achievement-title";
-
-title.textContent =
-item.title;
-
-let description =
-document.createElement("div");
-
-description.className =
-"achievement-description";
-
-description.textContent =
-item.description;
-
-card.appendChild(icon);
-card.appendChild(title);
-card.appendChild(description);
-
-grid.appendChild(card);
-
-}
-
-);
-
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-function updateStats(){
-
-let completed =
-getCompletedTotal();
-
-document.getElementById(
-"sessionCount"
-).textContent =
-focusStats.sessions;
-
-document.getElementById(
-"focusMinutes"
-).textContent =
-focusStats.minutes;
-
-document.getElementById(
-"completedActions"
-).textContent =
-completed;
-
-document.getElementById(
-"streakNumber"
-).textContent =
-calculateStreak();
-
-}
-
-
-/* =========================
-   PROGRESS
-========================= */
-
-function updateProgress(){
-
-let completed =
-tasks.filter(
-function(task){
-return task.completed;
-}
-).length;
-
-let total =
-tasks.length;
-
-let remaining =
-total-completed;
-
-let summary =
-document.getElementById(
-"focusSummary"
-);
-
-if(currentGoal===""){
-
-summary.textContent =
-"Set a goal and start taking action.";
-
-}
-else if(total===0){
-
-summary.textContent =
-"🎯 "
-+
-currentGoal
-+
-" — Add your first action.";
-
-}
-else if(completed===total){
-
-summary.textContent =
-"🎉 Goal actions complete! Great work.";
-
-}
-else{
-
-summary.textContent =
-"🎯 "
-+
-currentGoal
-+
-" — "
-+
-remaining
-+
-" actions remaining.";
-
-}
-
-let percentage =
-total===0
-?
-0
-:
-Math.round(
-completed/total*100
-);
-
-document.getElementById(
-"progressFill"
-).style.width =
-percentage+"%";
-
-document.getElementById(
-"progressText"
-).textContent =
-percentage+
-"% complete";
-
-let counter =
-document.getElementById(
-"taskCounter"
-);
-
-if(total===0){
-
-counter.textContent =
-"📝 No actions yet. Add your first action above!";
-
-}
-else if(completed===total){
-
-counter.textContent =
-"🏆 All actions completed!";
-
-}
-else{
-
-counter.textContent =
-remaining+
-" actions remaining";
-
-}
-
-}
-
-
-/* =========================
+/* -------------------------
    CLEAR
-========================= */
+------------------------- */
 
 function clearCompleted(){
 
-let before =
-tasks.length;
+const before = tasks.length;
 
 tasks =
-tasks.filter(
-function(task){
-return !task.completed;
-}
-);
+tasks.filter(t=>!t.completed);
 
-let removed =
+const removed =
 before-tasks.length;
 
-saveData();
+save();
 
-updateEverything();
+render();
 
-showMessage(
-removed>0
-?
-"🧹 Cleared "
-+
+toast(
 removed
-+
-" completed action"
-+
-(removed===1?"":"s")
-+
-"."
+?
+"🧹 "+removed+" completed action(s) cleared."
 :
 "No completed actions to clear."
 );
@@ -3937,25 +3243,23 @@ removed
 }
 
 
-/* =========================
+/* -------------------------
    EXPORT
-========================= */
+------------------------- */
 
 function exportData(){
 
-let data = {
+const data = {
 
 app:"FocusFlow",
 
-version:"V7",
+version:"V8",
 
-exportedAt:
-new Date().toISOString(),
+exportedAt:new Date().toISOString(),
 
-goal:currentGoal,
+goal:goal,
 
-goalCategory:
-currentGoalCategory,
+goalCategory:goalCategory,
 
 tasks:tasks,
 
@@ -3965,209 +3269,181 @@ focusStats:focusStats,
 
 dailyTarget:dailyTarget,
 
-achievements:
-achievementState,
+achievements:achievements,
 
-totalSessions:
-totalSessions,
+totalSessions:totalSessions,
 
-totalFocusMinutes:
-totalFocusMinutes
+totalFocusMinutes:totalFocusMinutes
 
 };
 
-let blob =
+const blob =
 new Blob(
 [
-JSON.stringify(
-data,
-null,
-2
-)
+JSON.stringify(data,null,2)
 ],
 {
 type:"application/json"
 }
 );
 
-let url =
+const url =
 URL.createObjectURL(blob);
 
-let link =
+const a =
 document.createElement("a");
 
-link.href =
-url;
+a.href = url;
 
-link.download =
-"FocusFlow-V7-Backup.json";
+a.download =
+"FocusFlow-V8-Backup.json";
 
-document.body.appendChild(link);
+document.body.appendChild(a);
 
-link.click();
+a.click();
 
-document.body.removeChild(link);
+a.remove();
 
 URL.revokeObjectURL(url);
 
-showMessage(
-"💾 Backup exported!"
-);
+toast("💾 V8 data backup exported!");
 
 }
 
 
-/* =========================
+/* -------------------------
    RESET
-========================= */
+------------------------- */
 
-function confirmReset(){
+function resetApp(){
 
-let answer =
+const answer =
 confirm(
-"Reset FocusFlow data? This will remove your current goal, actions, statistics and achievements."
+"Reset all FocusFlow data? This cannot be undone unless you have an exported backup."
 );
 
 if(!answer)
 return;
 
-localStorage.removeItem(
-"focusflowTasks"
-);
-
-localStorage.removeItem(
-"focusflowGoal"
-);
-
-localStorage.removeItem(
-"focusflowGoalCategory"
-);
-
-localStorage.removeItem(
-"focusflowDailyStats"
-);
-
-localStorage.removeItem(
+[
+"focusflowTasks",
+"focusflowGoal",
+"focusflowGoalCategory",
+"focusflowDailyStats",
+"focusflowV6Stats",
+"focusflowDailyTarget",
+"focusflowAchievements",
+"focusflowTotalSessions",
+"focusflowTotalFocusMinutes",
 "focusflowWelcomeHidden"
-);
-
-localStorage.removeItem(
-"focusflowV6Stats"
-);
-
-localStorage.removeItem(
-"focusflowDailyTarget"
-);
-
-localStorage.removeItem(
-"focusflowAchievements"
-);
-
-localStorage.removeItem(
-"focusflowTotalSessions"
-);
-
-localStorage.removeItem(
-"focusflowTotalFocusMinutes"
-);
+].forEach(key=>{
+localStorage.removeItem(key);
+});
 
 location.reload();
 
 }
 
 
-/* =========================
-   CAPITALIZE
-========================= */
-
-function capitalize(value){
-
-if(!value)
-return "";
-
-return value.charAt(0).toUpperCase()
-+
-value.slice(1);
-
-}
-
-
-/* =========================
+/* -------------------------
    KEYBOARD
-========================= */
+------------------------- */
 
-document.getElementById(
-"goalInput"
-).addEventListener(
-"keydown",
-function(event){
+document.getElementById("goalInput")
+.addEventListener("keydown",e=>{
 
-if(event.key==="Enter")
-setGoal();
+if(e.key === "Enter")
+saveGoal();
 
 });
 
+document.getElementById("taskInput")
+.addEventListener("keydown",e=>{
 
-document.getElementById(
-"taskInput"
-).addEventListener(
-"keydown",
-function(event){
-
-if(event.key==="Enter")
+if(e.key === "Enter")
 addTask();
 
 });
 
 
-/* =========================
-   EVERYTHING
-========================= */
+/* -------------------------
+   MAIN RENDER
+------------------------- */
 
-function updateEverything(){
+function render(){
 
 updateGreeting();
 
 updateWelcome();
 
-showCurrentGoal();
+renderDashboard();
 
-updateCoachMessage();
+renderCoach();
 
-displayTasks();
+renderPlan();
 
-updateDailyPlan();
+renderProgress();
 
-updateSmartCoach();
+renderTarget();
 
-updateTarget();
+renderWeek();
 
-updateWeek();
+renderStreak();
 
-updateAchievements();
+renderAchievements();
 
-updateStats();
+renderTasks();
 
-updateProgress();
+renderStats();
+
+const current =
+document.getElementById("currentGoal");
+
+if(goal){
+
+current.style.display = "block";
+
+let icon = "📚";
+
+if(goalCategory === "work")
+icon = "💼";
+
+if(goalCategory === "life")
+icon = "🌱";
+
+if(goalCategory === "money")
+icon = "💰";
+
+document.getElementById("goalDisplay").innerHTML =
+"<strong>Current Goal:</strong><br>"
++
+icon
++
+" "
++
+goal;
+
+}
+else{
+
+current.style.display = "none";
+
+}
 
 }
 
 
-/* =========================
-   START
-========================= */
+/* -------------------------
+   INIT
+------------------------- */
 
-document.getElementById(
-"goalCategory"
-).value =
-currentGoalCategory;
+document.getElementById("goalCategory").value =
+goalCategory;
 
-document.getElementById(
-"dailyTargetSelect"
-).value =
+document.getElementById("dailyTarget").value =
 String(dailyTarget);
 
-updateEverything();
+render();
 
 </script>
 
