@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V9</title>
+<title>FocusFlow V11</title>
 
 <style>
 *{box-sizing:border-box}
@@ -1552,7 +1552,7 @@ You're looking at the future Pro experience.
 </ul>
 
 <p style="color:#777;font-size:13px">
-Payments are not connected yet. This V9 screen is only the product foundation.
+Payments are not connected yet. This V11 screen is only the product foundation.
 </p>
 
 <div class="modal-actions">
@@ -1583,7 +1583,7 @@ onclick="notifyComingSoon()">
 <h2>⚙️ Settings</h2>
 
 <p>
-V9 currently stores your data locally in this browser.
+V11 currently stores your data locally in this browser.
 </p>
 
 <p>
@@ -1688,7 +1688,7 @@ onclick="reflect('skip')">
 <script>
 
 /* =========================================================
-   FOCUSFLOW V9
+   FOCUSFLOW V11
    Product + Monetization Foundation
    ========================================================= */
 
@@ -2193,8 +2193,38 @@ done+" of "+total+" actions completed"
 :
 "📝 No actions yet.";
 
+const oldClear=document.getElementById("clearCompletedButton");
+if(oldClear) oldClear.remove();
+
+if(done>0){
+const clear=document.createElement("button");
+clear.id="clearCompletedButton";
+clear.className="secondary-button";
+clear.textContent="🧹 Clear Completed";
+clear.style.marginTop="10px";
+clear.onclick=clearCompletedTasks;
+document.getElementById("taskList").after(clear);
 }
 
+}
+
+
+function clearCompletedTasks(){
+
+const before=tasks.length;
+
+tasks=tasks.filter(task=>!task.completed);
+
+if(tasks.length===before){
+toast("No completed actions to clear.");
+return;
+}
+
+save();
+render();
+toast("🧹 Completed actions cleared.");
+
+}
 
 function toggleTask(index){
 
@@ -3268,7 +3298,7 @@ const data={
 
 app:"FocusFlow",
 
-version:"V9",
+version:"V11",
 
 exportedAt:new Date().toISOString(),
 
@@ -3312,7 +3342,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V9-Backup.json";
+"FocusFlow-V11-Backup.json";
 
 document.body.appendChild(a);
 
