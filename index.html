@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V10</title>
+<title>FocusFlow V9</title>
 
 <style>
 *{box-sizing:border-box}
@@ -834,15 +834,6 @@ button{
   font-weight:bold;
 }
 
-
-.v10-ready{border:2px solid #e5defb;background:linear-gradient(135deg,#faf9ff,#fff7fb)}
-.v10-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}
-.v10-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:6px}
-.v10-item span{color:var(--muted);font-size:13px}
-.v10-actions{display:flex;gap:10px;flex-wrap:wrap}
-.v10-note{font-size:12px;color:var(--muted);margin-bottom:0}
-@media(max-width:760px){.v10-grid{grid-template-columns:repeat(2,1fr)}}
-
 /* MOBILE */
 
 @media(max-width:760px){
@@ -974,6 +965,26 @@ FREE
 
 </header>
 
+
+
+<!-- V11 LAUNCH READINESS -->
+<section class="card" id="v11LaunchCard">
+  <div class="section-title">
+    <div>
+      <h2>🚀 First-User Launch</h2>
+      <p class="muted">A simple checklist to make your first user's experience smoother.</p>
+    </div>
+    <span class="plan-badge" id="v11Score">0/5</span>
+  </div>
+  <div class="analytics-grid">
+    <div class="mini-stat"><div id="v11Profile">○</div><small>Profile</small></div>
+    <div class="mini-stat"><div id="v11Goal">○</div><small>Goal</small></div>
+    <div class="mini-stat"><div id="v11Action">○</div><small>First Action</small></div>
+    <div class="mini-stat"><div id="v11Focus">○</div><small>Focus Session</small></div>
+    <div class="mini-stat"><div id="v11Backup">○</div><small>Backup</small></div>
+  </div>
+  <p id="v11Coach" class="muted"></p>
+</section>
 
 <!-- DASHBOARD -->
 
@@ -1459,24 +1470,6 @@ onchange="changeTheme()">
 </section>
 
 
-<!-- V10 PRODUCT READINESS -->
-<section class="card v10-ready">
-<h2>🚀 V10 Product Readiness</h2>
-<p>V10 keeps the V9 experience and adds a safer path toward real users, accounts and revenue.</p>
-<div class="v10-grid">
-  <div class="v10-item"><strong>💾 Local Data</strong><span id="dataStatus">Checking…</span></div>
-  <div class="v10-item"><strong>👤 Profile</strong><span id="profileStatus">Checking…</span></div>
-  <div class="v10-item"><strong>🎯 Goal</strong><span id="goalStatus">Checking…</span></div>
-  <div class="v10-item"><strong>💎 Pro</strong><span>Product foundation ready</span></div>
-</div>
-<div class="v10-actions">
-  <button class="secondary" onclick="runHealthCheck()">🩺 Check My Data</button>
-  <button class="secondary" onclick="document.getElementById('importFile').click()">⬆️ Restore Backup</button>
-  <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importBackup(event)">
-</div>
-<p class="v10-note">Cloud accounts and payments are not connected yet. V10 does not pretend they are.</p>
-</section>
-
 <!-- BACKUP -->
 
 <section class="card">
@@ -1695,7 +1688,7 @@ onclick="reflect('skip')">
 <script>
 
 /* =========================================================
-   FOCUSFLOW V10
+   FOCUSFLOW V9
    Product + Monetization Foundation
    ========================================================= */
 
@@ -1924,6 +1917,27 @@ save();
 
 closeProfile();
 
+
+const _ffV11Render = typeof render === 'function' ? render : null;
+function renderV11LaunchReadiness(){
+  const profile = !!(localStorage.getItem("focusflowUserName") || state.userName || state.name);
+  const goal = !!(localStorage.getItem("focusflowGoal") || state.goal);
+  const action = Array.isArray(state.tasks) && state.tasks.length > 0;
+  const focus = (+localStorage.getItem("focusflowTotalSessions") || +state.totalSessions || 0) > 0;
+  const backup = !!localStorage.getItem("focusflowLastBackup");
+  const checks = [profile,goal,action,focus,backup];
+  const ids = ["v11Profile","v11Goal","v11Action","v11Focus","v11Backup"];
+  checks.forEach((ok,i)=>{const el=document.getElementById(ids[i]); if(el) el.textContent=ok?"✓":"○";});
+  const score=checks.filter(Boolean).length;
+  const scoreEl=document.getElementById("v11Score"); if(scoreEl) scoreEl.textContent=score+"/5";
+  const coach=document.getElementById("v11Coach");
+  if(coach) coach.textContent = score===5 ? "🎉 Launch readiness complete." :
+    "Next: "+["save a profile name","set your goal","add your first action","complete a focus session","export a backup"][score]+".";
+}
+const _ffV11OriginalExport = typeof exportBackup === "function" ? exportBackup : null;
+function v11MarkBackup(){ localStorage.setItem("focusflowLastBackup", new Date().toISOString()); }
+
+renderV11LaunchReadiness();
 render();
 
 toast(
@@ -3248,13 +3262,13 @@ save();
 
 /* EXPORT */
 
-function exportData(){
+function exportData(){v11MarkBackup();
 
 const data={
 
 app:"FocusFlow",
 
-version:"V10",
+version:"V9",
 
 exportedAt:new Date().toISOString(),
 
@@ -3298,7 +3312,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V10-Backup.json";
+"FocusFlow-V9-Backup.json";
 
 document.body.appendChild(a);
 
@@ -3308,7 +3322,7 @@ a.remove();
 
 URL.revokeObjectURL(url);
 
-toast("💾 V10 backup exported!");
+toast("💾 V9 backup exported!");
 
 }
 
@@ -3408,53 +3422,9 @@ changeTheme();
 }
 
 
-
-/* V10 PRODUCT READINESS */
-function runHealthCheck(){
-  const checks=[
-    ["focusflowTasks",tasks],
-    ["focusflowGoal",goal],
-    ["focusflowDailyStats",dailyStats],
-    ["focusflowV6Stats",focusStats]
-  ];
-  const healthy=checks.every(([k,v])=>localStorage.getItem(k)!==null || v!==undefined);
-  document.getElementById("dataStatus").textContent=healthy?"✅ Data available":"⚠️ Check backup";
-  document.getElementById("profileStatus").textContent=userName?"✅ "+userName:"Not set";
-  document.getElementById("goalStatus").textContent=goal?"✅ Saved":"Not set";
-  toast(healthy?"🩺 FocusFlow data check passed!":"⚠️ Some data is missing.");
-}
-function importBackup(event){
-  const file=event.target.files&&event.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=function(){
-    try{
-      const data=JSON.parse(reader.result);
-      const src=data.state||data;
-      if(!src||typeof src!=="object")throw new Error("Invalid backup");
-      if(Array.isArray(src.tasks))tasks=src.tasks;
-      if(typeof src.goal==="string")goal=src.goal;
-      if(typeof src.goalCategory==="string")goalCategory=src.goalCategory;
-      if(src.dailyStats&&typeof src.dailyStats==="object")dailyStats=src.dailyStats;
-      if(src.focusStats&&typeof src.focusStats==="object")focusStats=src.focusStats;
-      if(src.achievements&&typeof src.achievements==="object")achievements=src.achievements;
-      if(Number.isFinite(Number(src.dailyTarget)))dailyTarget=Number(src.dailyTarget);
-      if(Number.isFinite(Number(src.totalSessions)))totalSessions=Number(src.totalSessions);
-      if(Number.isFinite(Number(src.totalFocusMinutes)))totalFocusMinutes=Number(src.totalFocusMinutes);
-      if(typeof src.name==="string")userName=src.name;
-      if(typeof src.theme==="string")theme=src.theme;
-      if(typeof src.plan==="string")plan=src.plan;
-      save();render();runHealthCheck();toast("⬆️ Backup restored successfully!");
-    }catch(e){toast("⚠️ That backup file could not be restored.");}
-    event.target.value="";
-  };
-  reader.readAsText(file);
-}
-
 /* INIT */
 
 render();
-runHealthCheck();
 
 </script>
 
