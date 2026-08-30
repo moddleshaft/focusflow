@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V11</title>
+<title>FocusFlow V12</title>
 
 <style>
 *{box-sizing:border-box}
@@ -986,6 +986,23 @@ FREE
   <p id="v11Coach" class="muted"></p>
 </section>
 
+
+<!-- V12 FIRST-USER EXPERIENCE -->
+<section class="card" id="v12LaunchCard" style="background:linear-gradient(135deg,#f7f5ff,#fff7fb);border:2px solid #e4defc;">
+  <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;">
+    <div><h2 style="margin-bottom:4px;">🚀 Welcome to FocusFlow</h2>
+    <p class="muted" style="margin-top:0;">A simple path to your first win.</p></div>
+    <span class="plan-badge" id="v12Progress">0/3</span>
+  </div>
+  <div class="analytics-grid" style="margin-top:12px;">
+    <div class="metric"><div id="v12GoalCheck" class="metric-number">○</div><div class="metric-label">Set a Goal</div></div>
+    <div class="metric"><div id="v12ActionCheck" class="metric-number">○</div><div class="metric-label">Add an Action</div></div>
+    <div class="metric"><div id="v12FocusCheck" class="metric-number">○</div><div class="metric-label">Focus Session</div></div>
+    <div class="metric"><div id="v12WinCheck" class="metric-number">○</div><div class="metric-label">First Win</div></div>
+  </div>
+  <p id="v12Coach" class="muted" style="margin-bottom:0;"></p>
+</section>
+
 <!-- DASHBOARD -->
 
 <section class="card dashboard">
@@ -1470,6 +1487,19 @@ onchange="changeTheme()">
 </section>
 
 
+
+<!-- V12 FEEDBACK -->
+<section class="card" id="v12FeedbackCard" style="background:#f5fbff;border:2px solid #ccecff;">
+  <h2>💬 Help Shape FocusFlow</h2>
+  <p class="muted">What should FocusFlow improve next? Your note stays on this device.</p>
+  <textarea id="v12Feedback" placeholder="Your feedback..." style="width:100%;min-height:90px;padding:12px;border:2px solid #ddd;border-radius:10px;resize:vertical;"></textarea>
+  <div class="modal-actions" style="margin-top:10px;">
+    <button class="primary" onclick="saveV12Feedback()">Save Feedback</button>
+    <button class="secondary" onclick="clearV12Feedback()">Clear</button>
+  </div>
+  <p id="v12FeedbackStatus" class="muted" style="font-size:12px;margin-bottom:0;"></p>
+</section>
+
 <!-- BACKUP -->
 
 <section class="card">
@@ -1552,7 +1582,7 @@ You're looking at the future Pro experience.
 </ul>
 
 <p style="color:#777;font-size:13px">
-Payments are not connected yet. This V11 screen is only the product foundation.
+Payments are not connected yet. This V12 screen is only the product foundation.
 </p>
 
 <div class="modal-actions">
@@ -1583,7 +1613,7 @@ onclick="notifyComingSoon()">
 <h2>⚙️ Settings</h2>
 
 <p>
-V11 currently stores your data locally in this browser.
+V12 currently stores your data locally in this browser.
 </p>
 
 <p>
@@ -3292,13 +3322,13 @@ save();
 
 /* EXPORT */
 
-function exportData(){v11MarkBackup();
+function exportData(){v11MarkBackup();localStorage.setItem('focusflowV12Backup','1');
 
 const data={
 
 app:"FocusFlow",
 
-version:"V11",
+version:"V12",
 
 exportedAt:new Date().toISOString(),
 
@@ -3342,7 +3372,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V11-Backup.json";
+"FocusFlow-V12-Backup.json";
 
 document.body.appendChild(a);
 
@@ -3352,7 +3382,7 @@ a.remove();
 
 URL.revokeObjectURL(url);
 
-toast("💾 V9 backup exported!");
+toast("💾 V12 backup exported!");
 
 }
 
@@ -3414,6 +3444,8 @@ addTask();
 
 function render(){
 
+renderV12();
+
 updateGreeting();
 
 renderPlan();
@@ -3451,6 +3483,42 @@ changeTheme();
 
 }
 
+
+
+/* V12 FIRST-USER EXPERIENCE */
+function renderV12(){
+  const hasGoal=!!goal;
+  const hasAction=Array.isArray(tasks)&&tasks.length>0;
+  const hasFocus=(totalSessions||0)>0;
+  const firstWin=completedCount()>0;
+  const checks=[hasGoal,hasAction,hasFocus];
+  const score=checks.filter(Boolean).length;
+  const ids=["v12GoalCheck","v12ActionCheck","v12FocusCheck","v12WinCheck"];
+  [hasGoal,hasAction,hasFocus,firstWin].forEach((ok,i)=>{
+    const el=document.getElementById(ids[i]);
+    if(el){el.textContent=ok?"✓":"○";el.style.color=ok?"var(--success)":"var(--primary)";}
+  });
+  const p=document.getElementById("v12Progress"); if(p)p.textContent=score+"/3";
+  const coach=document.getElementById("v12Coach");
+  if(coach) coach.textContent=firstWin?"🎉 First win achieved. Keep going.":!hasGoal?"Step 1: set one clear goal.":!hasAction?"Step 2: add your smallest useful action.":"Step 3: start a focus session.";
+  const saved=localStorage.getItem("focusflowV12Feedback")||"";
+  const input=document.getElementById("v12Feedback"),status=document.getElementById("v12FeedbackStatus");
+  if(input && document.activeElement!==input)input.value=saved;
+  if(status&&saved)status.textContent="✓ Feedback saved on this device.";
+}
+function saveV12Feedback(){
+  const v=(document.getElementById("v12Feedback")?.value||"").trim();
+  if(!v){toast("💬 Write some feedback first.");return;}
+  localStorage.setItem("focusflowV12Feedback",v);
+  document.getElementById("v12FeedbackStatus").textContent="✓ Feedback saved on this device.";
+  toast("💬 Feedback saved!");
+}
+function clearV12Feedback(){
+  localStorage.removeItem("focusflowV12Feedback");
+  document.getElementById("v12Feedback").value="";
+  document.getElementById("v12FeedbackStatus").textContent="";
+  toast("Cleared");
+}
 
 /* INIT */
 
