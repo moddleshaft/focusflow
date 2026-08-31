@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V13</title>
+<title>FocusFlow V14</title>
 
 <style>
 *{box-sizing:border-box}
@@ -998,6 +998,27 @@ FREE
 <p id="v13Coach" class="muted"></p>
 </section>
 
+
+<!-- V14 USER + REVENUE LAUNCH -->
+<section class="card" id="v14Launch" style="background:linear-gradient(135deg,#fff8ef,#f7f5ff);border:2px solid #eadfc9;">
+  <div class="section-title">
+    <div><h2>🚀 FocusFlow Launch</h2><p class="muted">Turn your progress into your first real-user test.</p></div>
+    <span class="plan-badge">V14</span>
+  </div>
+  <div class="analytics-grid">
+    <div class="mini-stat"><div id="v14Goal">○</div><small>Goal</small></div>
+    <div class="mini-stat"><div id="v14Action">○</div><small>Action</small></div>
+    <div class="mini-stat"><div id="v14Win">○</div><small>First Win</small></div>
+    <div class="mini-stat"><div id="v14Share">○</div><small>Shared</small></div>
+  </div>
+  <div style="margin-top:14px;padding:14px;background:#fff;border-radius:12px;">
+    <strong>💎 Free → Pro</strong>
+    <p class="muted" style="margin:6px 0 12px;">Keep the core experience free. Pro can later unlock advanced insights, unlimited coaching, and premium planning.</p>
+    <button class="upgrade" onclick="openUpgrade()">✨ See Pro</button>
+  </div>
+  <p id="v14Coach" class="muted" style="margin-bottom:0;"></p>
+</section>
+
 <!-- DASHBOARD -->
 
 <section class="card dashboard">
@@ -1494,6 +1515,19 @@ onchange="changeTheme()">
 <button class="secondary" onclick="v13Feedback('Confusing')">❓ Confusing</button>
 </div>
 <p id="v13FeedbackStatus" class="muted"></p>
+</section>
+
+
+<!-- V14 TESTER INVITE -->
+<section class="card" id="v14Tester">
+  <h2>👥 Invite a Tester</h2>
+  <p class="muted">Send FocusFlow to one person and ask what they would improve.</p>
+  <textarea id="v14InviteText" readonly style="width:100%;min-height:105px;padding:12px;border:2px solid #ddd;border-radius:10px;resize:vertical;">I'm testing FocusFlow — a simple app for turning one goal into focused daily action. Try it and tell me what you think: https://moddleshaft.github.io/focusflow/</textarea>
+  <div class="modal-actions" style="margin-top:10px;">
+    <button class="primary" onclick="copyV14Invite()">📋 Copy Invite</button>
+    <button class="secondary" onclick="nativeShareV14()">📤 Share</button>
+  </div>
+  <p id="v14InviteStatus" class="muted"></p>
 </section>
 
 <!-- BACKUP -->
@@ -3324,7 +3358,7 @@ const data={
 
 app:"FocusFlow",
 
-version:"V13",
+version:"V14",
 
 exportedAt:new Date().toISOString(),
 
@@ -3368,7 +3402,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V13-Backup.json";
+"FocusFlow-V14-Backup.json";
 
 document.body.appendChild(a);
 
@@ -3378,7 +3412,7 @@ a.remove();
 
 URL.revokeObjectURL(url);
 
-toast("💾 V13 backup exported!");
+toast("💾 V14 backup exported!");
 
 }
 
@@ -3496,6 +3530,37 @@ function v13Feedback(value){
 }
 
 renderV13();
+
+
+/* V14 USER + REVENUE LAUNCH */
+function renderV14(){
+  const hasGoal=!!goal;
+  const hasAction=Array.isArray(tasks)&&tasks.length>0;
+  const hasWin=completedCount()>0;
+  const shared=!!localStorage.getItem("focusflowV14Shared");
+  [["v14Goal",hasGoal],["v14Action",hasAction],["v14Win",hasWin],["v14Share",shared]].forEach(([id,ok])=>{
+    const el=document.getElementById(id); if(el) el.textContent=ok?"✓":"○";
+  });
+  const c=document.getElementById("v14Coach");
+  if(c)c.textContent=hasWin?"🎉 First win complete. Invite one real tester.":!hasGoal?"Set one clear goal to begin.":!hasAction?"Add one small action next.":"Complete one action, then invite your first tester.";
+}
+function copyV14Invite(){
+  const text=document.getElementById("v14InviteText")?.value||"";
+  const done=()=>{localStorage.setItem("focusflowV14Shared","1");const st=document.getElementById("v14InviteStatus");if(st)st.textContent="✓ Invite copied.";if(typeof toast==="function")toast("📋 Tester invite copied!");renderV14();};
+  if(navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(()=>{fallbackV14Copy();done();});
+  else {fallbackV14Copy();done();}
+}
+function fallbackV14Copy(){
+  const el=document.getElementById("v14InviteText"); if(!el)return;
+  el.removeAttribute("readonly"); el.select(); try{document.execCommand("copy");}catch(e){} el.setAttribute("readonly","true");
+}
+async function nativeShareV14(){
+  const text=document.getElementById("v14InviteText")?.value||"";
+  if(navigator.share){try{await navigator.share({title:"Try FocusFlow",text:text});localStorage.setItem("focusflowV14Shared","1");renderV14();return;}catch(e){}}
+  copyV14Invite();
+}
+
+renderV14();
 
 /* INIT */
 
