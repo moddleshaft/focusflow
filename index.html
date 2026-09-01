@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V14</title>
+<title>FocusFlow V15</title>
 
 <style>
 *{box-sizing:border-box}
@@ -998,25 +998,21 @@ FREE
 <p id="v13Coach" class="muted"></p>
 </section>
 
-
-<!-- V14 USER + REVENUE LAUNCH -->
-<section class="card" id="v14Launch" style="background:linear-gradient(135deg,#fff8ef,#f7f5ff);border:2px solid #eadfc9;">
-  <div class="section-title">
-    <div><h2>🚀 FocusFlow Launch</h2><p class="muted">Turn your progress into your first real-user test.</p></div>
-    <span class="plan-badge">V14</span>
-  </div>
+<!-- V15 REAL USER + REVENUE TEST -->
+<section class="card" id="v15Launch" style="background:linear-gradient(135deg,#f8fbff,#fff8ef);border:2px solid #dce9f5;">
+  <div class="section-title"><div><h2>🚀 V15 Launch Lab</h2><p class="muted">Test FocusFlow with real people before adding more features.</p></div><span class="plan-badge">V15</span></div>
   <div class="analytics-grid">
-    <div class="mini-stat"><div id="v14Goal">○</div><small>Goal</small></div>
-    <div class="mini-stat"><div id="v14Action">○</div><small>Action</small></div>
-    <div class="mini-stat"><div id="v14Win">○</div><small>First Win</small></div>
-    <div class="mini-stat"><div id="v14Share">○</div><small>Shared</small></div>
+    <div class="mini-stat"><div id="v15Goal">○</div><small>Goal</small></div>
+    <div class="mini-stat"><div id="v15Action">○</div><small>Action</small></div>
+    <div class="mini-stat"><div id="v15Win">○</div><small>First Win</small></div>
+    <div class="mini-stat"><div id="v15Tester">○</div><small>Tester</small></div>
   </div>
   <div style="margin-top:14px;padding:14px;background:#fff;border-radius:12px;">
     <strong>💎 Free → Pro</strong>
-    <p class="muted" style="margin:6px 0 12px;">Keep the core experience free. Pro can later unlock advanced insights, unlimited coaching, and premium planning.</p>
-    <button class="upgrade" onclick="openUpgrade()">✨ See Pro</button>
+    <p class="muted" style="margin:6px 0 12px;">Keep the core experience free. Pro can later unlock advanced insights, advanced planning, and personalized coaching.</p>
+    <button class="upgrade" onclick="openUpgrade()">✨ Explore Pro</button>
   </div>
-  <p id="v14Coach" class="muted" style="margin-bottom:0;"></p>
+  <p id="v15Coach" class="muted" style="margin-bottom:0;"></p>
 </section>
 
 <!-- DASHBOARD -->
@@ -1517,17 +1513,25 @@ onchange="changeTheme()">
 <p id="v13FeedbackStatus" class="muted"></p>
 </section>
 
-
-<!-- V14 TESTER INVITE -->
-<section class="card" id="v14Tester">
+<!-- V15 INVITE A TESTER -->
+<section class="card" id="v15TesterInvite">
   <h2>👥 Invite a Tester</h2>
-  <p class="muted">Send FocusFlow to one person and ask what they would improve.</p>
-  <textarea id="v14InviteText" readonly style="width:100%;min-height:105px;padding:12px;border:2px solid #ddd;border-radius:10px;resize:vertical;">I'm testing FocusFlow — a simple app for turning one goal into focused daily action. Try it and tell me what you think: https://moddleshaft.github.io/focusflow/</textarea>
+  <p class="muted">Copy this message and send FocusFlow to your first real tester.</p>
+  <textarea id="v15InviteText" readonly style="width:100%;min-height:105px;padding:12px;border:2px solid #ddd;border-radius:10px;resize:vertical;">I'm testing FocusFlow — a simple app for turning one goal into focused daily action. Try it and tell me what you think: https://moddleshaft.github.io/focusflow/</textarea>
   <div class="modal-actions" style="margin-top:10px;">
-    <button class="primary" onclick="copyV14Invite()">📋 Copy Invite</button>
-    <button class="secondary" onclick="nativeShareV14()">📤 Share</button>
+    <button class="primary" onclick="copyV15Invite()">📋 Copy Invite</button>
+    <button class="secondary" onclick="shareV15Invite()">📤 Share</button>
   </div>
-  <p id="v14InviteStatus" class="muted"></p>
+  <p id="v15InviteStatus" class="muted"></p>
+</section>
+
+<!-- V15 60-SECOND USER TEST -->
+<section class="card" id="v15TestCard">
+  <h2>🧪 60-Second User Test</h2>
+  <p class="muted">Ask one tester: “What did you expect FocusFlow to help you do?”</p>
+  <textarea id="v15UserNote" placeholder="Write the tester's answer here..." style="width:100%;min-height:90px;padding:12px;border:2px solid #ddd;border-radius:10px;resize:vertical;"></textarea>
+  <div class="modal-actions" style="margin-top:10px;"><button class="primary" onclick="saveV15Note()">💾 Save Test Note</button><button class="secondary" onclick="clearV15Note()">Clear</button></div>
+  <p id="v15NoteStatus" class="muted"></p>
 </section>
 
 <!-- BACKUP -->
@@ -1612,7 +1616,7 @@ You're looking at the future Pro experience.
 </ul>
 
 <p style="color:#777;font-size:13px">
-Payments are not connected yet. This V13 screen is only the product foundation.
+Payments are not connected yet. This V15 screen is only the product foundation.
 </p>
 
 <div class="modal-actions">
@@ -1643,7 +1647,7 @@ onclick="notifyComingSoon()">
 <h2>⚙️ Settings</h2>
 
 <p>
-V13 currently stores your data locally in this browser.
+V15 currently stores your data locally in this browser.
 </p>
 
 <p>
@@ -3358,7 +3362,7 @@ const data={
 
 app:"FocusFlow",
 
-version:"V14",
+version:"V15",
 
 exportedAt:new Date().toISOString(),
 
@@ -3402,7 +3406,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V14-Backup.json";
+"FocusFlow-V15-Backup.json";
 
 document.body.appendChild(a);
 
@@ -3412,7 +3416,7 @@ a.remove();
 
 URL.revokeObjectURL(url);
 
-toast("💾 V14 backup exported!");
+toast("💾 V15 backup exported!");
 
 }
 
@@ -3532,35 +3536,31 @@ function v13Feedback(value){
 renderV13();
 
 
-/* V14 USER + REVENUE LAUNCH */
-function renderV14(){
-  const hasGoal=!!goal;
-  const hasAction=Array.isArray(tasks)&&tasks.length>0;
-  const hasWin=completedCount()>0;
-  const shared=!!localStorage.getItem("focusflowV14Shared");
-  [["v14Goal",hasGoal],["v14Action",hasAction],["v14Win",hasWin],["v14Share",shared]].forEach(([id,ok])=>{
-    const el=document.getElementById(id); if(el) el.textContent=ok?"✓":"○";
-  });
-  const c=document.getElementById("v14Coach");
-  if(c)c.textContent=hasWin?"🎉 First win complete. Invite one real tester.":!hasGoal?"Set one clear goal to begin.":!hasAction?"Add one small action next.":"Complete one action, then invite your first tester.";
+/* V15 INVITE A TESTER */
+function copyV15Invite(){
+  const text=document.getElementById("v15InviteText")?.value||"";
+  const done=()=>{localStorage.setItem("focusflowV15TesterInvited","1");const st=document.getElementById("v15InviteStatus");if(st)st.textContent="✓ Invite copied.";if(typeof toast==="function")toast("📋 Tester invite copied!");renderV15();};
+  if(navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(()=>{const el=document.getElementById("v15InviteText");if(el){el.removeAttribute("readonly");el.select();try{document.execCommand("copy");}catch(e){}el.setAttribute("readonly","true");}done();});
+  else {const el=document.getElementById("v15InviteText");if(el){el.removeAttribute("readonly");el.select();try{document.execCommand("copy");}catch(e){}el.setAttribute("readonly","true");}done();}
 }
-function copyV14Invite(){
-  const text=document.getElementById("v14InviteText")?.value||"";
-  const done=()=>{localStorage.setItem("focusflowV14Shared","1");const st=document.getElementById("v14InviteStatus");if(st)st.textContent="✓ Invite copied.";if(typeof toast==="function")toast("📋 Tester invite copied!");renderV14();};
-  if(navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(()=>{fallbackV14Copy();done();});
-  else {fallbackV14Copy();done();}
-}
-function fallbackV14Copy(){
-  const el=document.getElementById("v14InviteText"); if(!el)return;
-  el.removeAttribute("readonly"); el.select(); try{document.execCommand("copy");}catch(e){} el.setAttribute("readonly","true");
-}
-async function nativeShareV14(){
-  const text=document.getElementById("v14InviteText")?.value||"";
-  if(navigator.share){try{await navigator.share({title:"Try FocusFlow",text:text});localStorage.setItem("focusflowV14Shared","1");renderV14();return;}catch(e){}}
-  copyV14Invite();
+async function shareV15Invite(){
+  const text=document.getElementById("v15InviteText")?.value||"";
+  if(navigator.share){try{await navigator.share({title:"Try FocusFlow",text});localStorage.setItem("focusflowV15TesterInvited","1");const st=document.getElementById("v15InviteStatus");if(st)st.textContent="✓ Share opened.";renderV15();return;}catch(e){}}
+  copyV15Invite();
 }
 
-renderV14();
+/* V15 REAL USER TESTING */
+function renderV15(){
+  const goalSet=!!goal, actionSet=Array.isArray(tasks)&&tasks.length>0, win=completedCount()>0, tester=!!localStorage.getItem("focusflowV15TesterInvited");
+  [["v15Goal",goalSet],["v15Action",actionSet],["v15Win",win],["v15Tester",tester]].forEach(([id,ok])=>{const e=document.getElementById(id);if(e)e.textContent=ok?"✓":"○";});
+  const c=document.getElementById("v15Coach"); if(c)c.textContent=win?"🎉 First win achieved. Invite one real tester and learn from them.":!goalSet?"Set one clear goal first.":!actionSet?"Add one small action next.":"Complete one action to create your first win.";
+  const note=localStorage.getItem("focusflowV15UserNote")||"", input=document.getElementById("v15UserNote"), status=document.getElementById("v15NoteStatus");
+  if(input&&document.activeElement!==input)input.value=note; if(status&&note)status.textContent="✓ Test note saved on this device.";
+}
+function saveV15Note(){const value=(document.getElementById("v15UserNote")?.value||"").trim();if(!value){toast("🧪 Add the tester's answer first.");return;}localStorage.setItem("focusflowV15UserNote",value);localStorage.setItem("focusflowV15TesterInvited","1");document.getElementById("v15NoteStatus").textContent="✓ Test note saved on this device.";toast("🧪 User test saved!");renderV15();}
+function clearV15Note(){localStorage.removeItem("focusflowV15UserNote");document.getElementById("v15UserNote").value="";document.getElementById("v15NoteStatus").textContent="";renderV15();}
+
+renderV15();
 
 /* INIT */
 
