@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FocusFlow V15</title>
+<title>FocusFlow V16</title>
 
 <style>
 *{box-sizing:border-box}
@@ -1000,7 +1000,7 @@ FREE
 
 <!-- V15 REAL USER + REVENUE TEST -->
 <section class="card" id="v15Launch" style="background:linear-gradient(135deg,#f8fbff,#fff8ef);border:2px solid #dce9f5;">
-  <div class="section-title"><div><h2>🚀 V15 Launch Lab</h2><p class="muted">Test FocusFlow with real people before adding more features.</p></div><span class="plan-badge">V15</span></div>
+  <div class="section-title"><div><h2>🚀 V16 Launch Lab</h2><p class="muted">Test FocusFlow with real people before adding more features.</p></div><span class="plan-badge">V16</span></div>
   <div class="analytics-grid">
     <div class="mini-stat"><div id="v15Goal">○</div><small>Goal</small></div>
     <div class="mini-stat"><div id="v15Action">○</div><small>Action</small></div>
@@ -1013,6 +1013,35 @@ FREE
     <button class="upgrade" onclick="openUpgrade()">✨ Explore Pro</button>
   </div>
   <p id="v15Coach" class="muted" style="margin-bottom:0;"></p>
+</section>
+
+
+<!-- V16 FIRST REVENUE / PRO DEMAND TEST -->
+<section class="card" id="v16RevenueCard" style="background:linear-gradient(135deg,#f7f5ff,#fff8ef);border:2px solid #e4defc;">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div>
+      <h2 style="margin-bottom:4px;">💎 FocusFlow Pro Interest</h2>
+      <p class="muted" style="margin-top:0;">Measure demand before connecting a real payment provider.</p>
+    </div>
+    <span class="plan-badge" id="v16PlanBadge">FREE</span>
+  </div>
+
+  <div class="analytics-grid" style="margin-top:12px;">
+    <div class="metric"><div class="metric-number">✓</div><div class="metric-label">Goals & Actions</div></div>
+    <div class="metric"><div class="metric-number">✓</div><div class="metric-label">Focus Sessions</div></div>
+    <div class="metric"><div class="metric-number">✓</div><div class="metric-label">Progress Tracking</div></div>
+    <div class="metric"><div id="v16InterestCount" class="metric-number">0</div><div class="metric-label">Pro Interest</div></div>
+  </div>
+
+  <div style="margin-top:14px;padding:14px;background:#fff;border-radius:12px;">
+    <strong>Possible Pro features</strong>
+    <p class="muted" style="margin:6px 0 12px;">
+      Advanced analytics · deeper planning · personalized coaching · extended history
+    </p>
+    <button class="upgrade" onclick="v16ShowInterest()">💎 I Want Pro</button>
+  </div>
+
+  <p id="v16InterestStatus" class="muted" style="margin-bottom:0;"></p>
 </section>
 
 <!-- DASHBOARD -->
@@ -1534,6 +1563,28 @@ onchange="changeTheme()">
   <p id="v15NoteStatus" class="muted"></p>
 </section>
 
+
+<!-- V16 FIRST 10 USERS -->
+<section class="card" id="v16UsersCard">
+  <h2>👥 First 10 Users</h2>
+  <p class="muted">Track your early testers on this device.</p>
+
+  <div class="input-area">
+    <input id="v16TesterName" placeholder="Tester name or nickname">
+    <button class="primary" onclick="v16AddTester()">➕ Add Tester</button>
+  </div>
+
+  <div id="v16TesterList" style="margin-top:12px;"></div>
+
+  <div class="progress-bar" style="margin-top:14px;">
+    <div id="v16TesterProgress" class="progress-fill"></div>
+  </div>
+  <p id="v16TesterProgressText" class="progress-text">0/10 testers</p>
+
+  <button class="secondary" onclick="v16CopyTesterInvite()">📋 Copy Tester Invite</button>
+  <p id="v16TesterStatus" class="muted"></p>
+</section>
+
 <!-- BACKUP -->
 
 <section class="card">
@@ -1616,7 +1667,7 @@ You're looking at the future Pro experience.
 </ul>
 
 <p style="color:#777;font-size:13px">
-Payments are not connected yet. This V15 screen is only the product foundation.
+Payments are not connected yet. This V16 screen is only the product foundation.
 </p>
 
 <div class="modal-actions">
@@ -1647,7 +1698,7 @@ onclick="notifyComingSoon()">
 <h2>⚙️ Settings</h2>
 
 <p>
-V15 currently stores your data locally in this browser.
+V16 currently stores your data locally in this browser.
 </p>
 
 <p>
@@ -3293,6 +3344,7 @@ copyProgress();
 /* UPGRADE */
 
 function openUpgrade(){
+localStorage.setItem("focusflowV16ProInterest","1");
 
 document.getElementById("upgradeModal").style.display=
 "flex";
@@ -3362,7 +3414,7 @@ const data={
 
 app:"FocusFlow",
 
-version:"V15",
+version:"V16",
 
 exportedAt:new Date().toISOString(),
 
@@ -3406,7 +3458,7 @@ document.createElement("a");
 a.href=url;
 
 a.download=
-"FocusFlow-V15-Backup.json";
+"FocusFlow-V16-Backup.json";
 
 document.body.appendChild(a);
 
@@ -3416,7 +3468,7 @@ a.remove();
 
 URL.revokeObjectURL(url);
 
-toast("💾 V15 backup exported!");
+toast("💾 V16 backup exported!");
 
 }
 
@@ -3561,6 +3613,119 @@ function saveV15Note(){const value=(document.getElementById("v15UserNote")?.valu
 function clearV15Note(){localStorage.removeItem("focusflowV15UserNote");document.getElementById("v15UserNote").value="";document.getElementById("v15NoteStatus").textContent="";renderV15();}
 
 renderV15();
+
+
+/* V16 FIRST REVENUE + FIRST 10 USERS */
+
+function renderV16(){
+  const planValue=localStorage.getItem("focusflowPlan")||"free";
+  const badge=document.getElementById("v16PlanBadge");
+  if(badge)badge.textContent=planValue==="pro"?"💎 PRO":"FREE";
+
+  const interested=localStorage.getItem("focusflowV16ProInterest")==="1";
+  const count=document.getElementById("v16InterestCount");
+  const status=document.getElementById("v16InterestStatus");
+  if(count)count.textContent=interested?"1":"0";
+  if(status)status.textContent=interested
+    ?"✓ Pro interest saved on this device."
+    :"No payment is connected yet. V16 is measuring demand first.";
+
+  let testers=[];
+  try{testers=JSON.parse(localStorage.getItem("focusflowV16Testers")||"[]");}
+  catch(e){testers=[];}
+
+  const list=document.getElementById("v16TesterList");
+  if(list){
+    list.innerHTML="";
+    testers.forEach((name,index)=>{
+      const row=document.createElement("div");
+      row.style.cssText="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eee;border-radius:10px;margin-bottom:8px;background:#fff;";
+      const label=document.createElement("span");
+      label.textContent=(index+1)+". "+name;
+      const remove=document.createElement("button");
+      remove.className="delete-button";
+      remove.textContent="Remove";
+      remove.onclick=()=>v16RemoveTester(index);
+      row.appendChild(label);
+      row.appendChild(remove);
+      list.appendChild(row);
+    });
+  }
+
+  const capped=Math.min(testers.length,10);
+  const fill=document.getElementById("v16TesterProgress");
+  const text=document.getElementById("v16TesterProgressText");
+  if(fill)fill.style.width=(capped*10)+"%";
+  if(text)text.textContent=capped+"/10 testers";
+}
+
+function v16ShowInterest(){
+  localStorage.setItem("focusflowV16ProInterest","1");
+  renderV16();
+  if(typeof toast==="function")toast("💎 Pro interest saved!");
+  if(typeof openUpgrade==="function")openUpgrade();
+}
+
+function v16AddTester(){
+  const input=document.getElementById("v16TesterName");
+  const name=(input?.value||"").trim();
+  if(!name){if(typeof toast==="function")toast("👥 Enter a tester name first.");return;}
+
+  let testers=[];
+  try{testers=JSON.parse(localStorage.getItem("focusflowV16Testers")||"[]");}
+  catch(e){testers=[];}
+
+  if(testers.length>=10){
+    if(typeof toast==="function")toast("🎉 You already reached 10 testers!");
+    return;
+  }
+
+  testers.push(name);
+  localStorage.setItem("focusflowV16Testers",JSON.stringify(testers));
+  input.value="";
+  renderV16();
+  if(typeof toast==="function")toast("👥 Tester added!");
+}
+
+function v16RemoveTester(index){
+  let testers=[];
+  try{testers=JSON.parse(localStorage.getItem("focusflowV16Testers")||"[]");}
+  catch(e){testers=[];}
+  testers.splice(index,1);
+  localStorage.setItem("focusflowV16Testers",JSON.stringify(testers));
+  renderV16();
+}
+
+function v16CopyTesterInvite(){
+  const text="I'm testing FocusFlow — a simple app for turning one goal into focused daily action. Try it and tell me what you think: https://moddleshaft.github.io/focusflow/";
+  const done=()=>{
+    localStorage.setItem("focusflowV16TesterInviteCopied","1");
+    const st=document.getElementById("v16TesterStatus");
+    if(st)st.textContent="✓ Tester invite copied.";
+    if(typeof toast==="function")toast("📋 Tester invite copied!");
+  };
+
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(done).catch(()=>{
+      v16FallbackCopy(text);
+      done();
+    });
+  }else{
+    v16FallbackCopy(text);
+    done();
+  }
+}
+
+function v16FallbackCopy(text){
+  const ta=document.createElement("textarea");
+  ta.value=text;
+  ta.style.position="fixed";
+  ta.style.opacity="0";
+  document.body.appendChild(ta);
+  ta.select();
+  try{document.execCommand("copy");}catch(e){}
+  ta.remove();
+}
 
 /* INIT */
 
